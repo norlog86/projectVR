@@ -1,20 +1,21 @@
 @extends('layers')
-@section('title', 'Игра')
+@section('title',  'Игра:'.' '.$game->name)
 @section('content')
-<div class="container">
-    <div class="starter-template">
-        <h1>iPhone X 64GB</h1>
-        <h2>{{$game->name}}</h2>
-        <h2>Мобильные телефоны</h2>
-        <p>Цена: <b>71990 ₽</b></p>
-        <img src="http://internet-shop.tmweb.ru/storage/products/iphone_x.jpg">
-        <p>Отличный продвинутый телефон с памятью на 64 gb</p>
+    <div class="container">
+        <div class="starter-template">
+            <h1>{{$game->name}}</h1>
+            <img src="{{$game->img}}">
+            <p><b>Время игры:</b> {{$game->time}}</p>
+            <p><b>Цена:</b> {{$game->price}} ₽</p>
+            <p><b>Количество игроков:</b> {{$game->players}}</p>
+            <p><b>Тип игры:</b> {{$game->type}}</p>
+            <p><b>Описание:</b> {{$game->text}}</p>
 
-        <form action="http://internet-shop.tmweb.ru/basket/add/1" method="POST">
-            <button type="submit" class="btn btn-success" role="button">Добавить в корзину</button>
+            <form action="http://internet-shop.tmweb.ru/basket/add/1" method="POST">
+                <button type="submit" class="btn btn-success" role="button">Забронировать</button>
 
-            <input type="hidden" name="_token" value="R0Mb6NTvrGsRHuRb6m6rfcnDdULmckQeo3daRy1l"></form>
+                <input type="hidden" name="_token" value="R0Mb6NTvrGsRHuRb6m6rfcnDdULmckQeo3daRy1l"></form>
+        </div>
     </div>
-</div>
 @endsection
 

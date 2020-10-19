@@ -22,8 +22,8 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{route('games')}}">Игры</a></li>
-                <li><a href="{{'rooms'}}">Комнаты</a></li>
-                <li><a href="{{'about'}}">О нас</a></li>
+                <li><a href="{{route('rooms')}}">Комнаты</a></li>
+                <li><a href="{{route('about')}}">О нас</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

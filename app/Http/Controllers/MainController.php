@@ -35,9 +35,9 @@ class MainController extends Controller
         return view('games', compact('games'));
     }
 
-    public function game($room, $game = null, $id)
+    public function game($id, $room, $game = null )
     {
-        $game = Game::where('id', $id)->get();
+        $game = Game::where('id', $id)->first();
         return view('game', ['game' => $game]);
     }
 

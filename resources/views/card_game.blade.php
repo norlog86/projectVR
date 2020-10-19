@@ -12,7 +12,7 @@
             <form action="{{$game->id}}" method="POST">
                 <button type="submit" class="btn btn-primary" role="button">Бронировать</button>
                 {{--                <a href="{{route('game', compact('id'))}}"--}}
-                <a href=""
+                <a href="{{route('game', $game->id)}}"
                    class="btn btn-default"
                    role="button">Подробнее</a>
                 <input type="hidden" name="_token" value="lFTktAclmqdU6ecZPUMPMxVBI7s9fsZei9mEvl4u"></form>
