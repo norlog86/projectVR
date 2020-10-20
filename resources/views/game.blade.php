@@ -8,8 +8,9 @@
             <p><b>Время игры:</b> {{$game->time}}</p>
             <p><b>Цена:</b> {{$game->price}} ₽</p>
             <p><b>Количество игроков:</b> {{$game->players}}</p>
-            <p><b>Тип игры:</b> {{$game->type}}</p>
+            <p><b>Тип игры:</b> {{$game->type->name}}</p>
             <p><b>Описание:</b> {{$game->text}}</p>
+            <p><b>Комната:</b> {{$game->room->name}}</p>
 
             <form action="http://internet-shop.tmweb.ru/basket/add/1" method="POST">
                 <button type="submit" class="btn btn-success" role="button">Забронировать</button>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTimeTable extends Migration
+class CreateReservationGameTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateTimeTable extends Migration
      */
     public function up()
     {
-        Schema::create('time', function (Blueprint $table) {
+        Schema::create('reservation_game', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->integer('reservation_id');
+            $table->integer('game_id');
+            $table->integer('room_id');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateTimeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('time');
+        Schema::dropIfExists('reservation_game');
     }
 }

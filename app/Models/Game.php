@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Модель "Игра"
+ */
 class Game extends Model
 {
     use HasFactory;
@@ -14,13 +17,23 @@ class Game extends Model
 //        return Room::find($this->room_id);
 //    }
 
-    public function games()
+    public function type()
     {
-        return $this->belongsTo(Game::class);
+        return $this->hasOne('App\Models\Type_game', 'id', 'type_game_id');
     }
 
     public function room()
     {
-        return $this->belongsTo(Room::class);
+        return $this->hasOne('App\Models\Room', 'id', 'room_id');
     }
+
+    public function games()
+    {
+        return $this->belongsTo(Game::class);
+    }
+//
+//    public function room()
+//    {
+//        return $this->belongsTo(Room::class);
+//    }
 }
