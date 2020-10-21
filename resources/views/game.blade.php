@@ -12,10 +12,10 @@
             <p><b>Описание:</b> {{$game->text}}</p>
             <p><b>Комната:</b> {{$game->room->name}}</p>
 
-            <form action="http://internet-shop.tmweb.ru/basket/add/1" method="POST">
+            <form action="{{route('reservation', $game->id)}}" method="POST">
                 <button type="submit" class="btn btn-success" role="button">Забронировать</button>
-
-                <input type="hidden" name="_token" value="R0Mb6NTvrGsRHuRb6m6rfcnDdULmckQeo3daRy1l"></form>
+                @csrf
+                </form>
         </div>
     </div>
 @endsection

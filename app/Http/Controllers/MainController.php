@@ -45,9 +45,4 @@ class MainController extends Controller
     {
         return view('about');
     }
-
-    public function reservation()
-    {
-        return view('reservation');
-    }
 }

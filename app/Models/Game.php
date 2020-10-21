@@ -31,9 +31,9 @@ class Game extends Model
     {
         return $this->belongsTo(Game::class);
     }
-//
-//    public function room()
-//    {
-//        return $this->belongsTo(Room::class);
-//    }
+
+    public function rooms()
+    {
+        return $this->belongsTo(Room::class);
+    }
 }
