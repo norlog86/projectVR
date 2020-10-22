@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class ReservationController extends Controller
 
     public function reservation()
     {
-        $orderId = session('ordersId');
+        $orderId = session('orderId');
         if (!is_null($orderId)) {
             $order = Reservation::findOrFail($orderId);
         }
@@ -18,22 +19,67 @@ class ReservationController extends Controller
 
     }
 
-    public function reservationOrder()
+    public function reservationConfirm(Request $request)
     {
-        return view('order');
+        $orderId = session('orderId');
+        if (is_null($orderId)) {
+            return redirect()->route('index');
+        }
+        $order = Reservation::find($orderId);
+        $success = $order->saveOrder($request->name, $request->phone, $request->text);
+
+        if ($success) {
+            session()->flash('success', 'Игра забронирована');
+        } else {
+            session()->flash('warning', 'Случилась ошибка');
+        }
+        return redirect()->route('index');
+    }
+
+    public function reservationPlace()
+    {
+        $orderId = session('orderId');
+        if (is_null($orderId)) {
+            return redirect()->route('index');
+        }
+        $order = Reservation::find($orderId);
+        return view('order', compact('order'));
     }
 
     public function reservationAdd($gameId)
     {
-        $orderId = session('ordersId');
+        $orderId = session('orderId');
         if (is_null($orderId)) {
             $order = Reservation::create();
-            session(['ordersId' => $order->id]);
+            session(['orderId' => $order->id]);
         } else {
             $order = Reservation::find($orderId);
         }
-        $order->games()->attach($gameId);
+        if ($order->games->contains($gameId)) {
+            $errors = 'Такая игра уже добавлена';
+        } else {
+            $order->games()->attach($gameId);
+        }
+        $game = Game::find($gameId);
 
-        return view('reservation', compact('order'));
+        session()->flash('success', 'Добавлен товар ' . $game->name);
+
+        return redirect()->route('reservation');
+    }
+
+    public function reservationRemove($gameId)
+    {
+        $orderId = session('orderId');
+        if (is_null($orderId)) {
+            return redirect()->route('reservation');
+        }
+        $order = Reservation::find($orderId);
+        $order->games()->detach($gameId);
+
+        $game = Game::find($gameId);
+
+        session()->flash('warning', 'Удалена игра  ' . $game->name);
+
+        return redirect()->route('reservation');
     }
 }

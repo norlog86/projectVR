@@ -1,4 +1,4 @@
-@extends('layers')
+@extends('layouts.layers')
 @section('title',  'Игра:'.' '.$game->name)
 @section('content')
     <div class="container">

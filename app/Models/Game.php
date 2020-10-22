@@ -36,4 +36,9 @@ class Game extends Model
     {
         return $this->belongsTo(Room::class);
     }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
 }

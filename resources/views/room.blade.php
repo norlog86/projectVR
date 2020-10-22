@@ -1,4 +1,4 @@
-@extends('layers')
+@extends('layouts.layers')
 @section('title', $room->name)
 @section('content')
     <div class="container">
@@ -11,7 +11,7 @@
             </p>
             <div class="filters row">
                 @foreach($games as $game)
-                    @include('card_game', ['room'=>$room])
+                    @include('card.card_game', ['room'=>$room])
                 @endforeach
             </div>
         </div>

@@ -1,4 +1,4 @@
-@extends('layers')
+@extends('layouts.layers')
 
 @section('title', 'Главная')
 
@@ -11,7 +11,7 @@
             <h1>Игры</h1>
             <div class="filters row">
                 @foreach($games as $game)
-                    @include('card_game', compact('game'))
+                    @include('card.card_game', compact('game'))
                 @endforeach
             </div>
         </div>
@@ -19,7 +19,7 @@
             <h1>Комнаты</h1>
             <div class="filters row">
                 @foreach($rooms as $room)
-                    @include('card_room', compact('room'))
+                    @include('card.card_room', compact('room'))
                 @endforeach
             </div>
         </div>

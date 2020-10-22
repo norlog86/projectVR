@@ -37,6 +37,9 @@
 </nav>
 
 <div class="container">
+    @if(session()->has('success'))
+        <p class="alert alert-success">{{session()->get('success')}}</p>
+        @endif
     @yield('content')
 </div>
 </body>

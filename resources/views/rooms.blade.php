@@ -1,4 +1,4 @@
-@extends('layers')
+@extends('layouts.layers')
 @section('title', 'Комнаты')
 @section('content')
     <div class="container">
