@@ -17,8 +17,8 @@ use App\Http\Controllers\ReservationController;
 */
 Route::get('/', [MainController::class, 'index'])->name('index');
 
-Route::post('/reservation/{id?}', [ReservationController::class, 'reservation'])->name('reservation');
-Route::post('/reservation/add/{id?}', [ReservationController::class, 'reservationAdd'])->name('reservation_add');
+Route::get('/reservation', [ReservationController::class, 'reservation'])->name('reservation');
+Route::post('/reservation/add/{id}', [ReservationController::class, 'reservationAdd'])->name('reservation_add');
 
 Route::get('/rooms', [MainController::class, 'rooms'])->name('rooms');
 Route::get('/rooms/{room?}', [MainController::class, 'room'])->name('room');

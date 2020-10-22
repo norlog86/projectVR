@@ -13,14 +13,4 @@ class Reservation extends Model
     {
         return $this->belongsToMany(Game::class);
     }
-
-    public function rooms()
-    {
-        return $this->belongsToMany(Room::class);
-    }
-
-//    public function sost()
-//    {
-//        return $this->belongsToMany(Sost_reserv::class);
-//    }
 }

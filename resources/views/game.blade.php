@@ -12,8 +12,8 @@
             <p><b>Описание:</b> {{$game->text}}</p>
             <p><b>Комната:</b> {{$game->room->name}}</p>
 
-            <form action="{{route('reservation', $game->id)}}" method="POST">
-                <button type="submit" class="btn btn-success" role="button">Забронировать</button>
+            <form action="{{route('reservation_add', $game->id)}}" method="POST">
+                <button type="submit" class="btn btn-success" role="button">Бронировать</button>
                 @csrf
                 </form>
         </div>

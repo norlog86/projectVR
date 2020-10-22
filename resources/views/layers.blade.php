@@ -24,6 +24,8 @@
                 <li class="active"><a href="{{route('games')}}">Игры</a></li>
                 <li><a href="{{route('rooms')}}">Комнаты</a></li>
                 <li><a href="{{route('about')}}">О нас</a></li>
+                <li><a href="{{route('reservation')}}">Бронирование</a></li>
+
             </ul>
 
             <ul class="nav navbar-nav navbar-right">

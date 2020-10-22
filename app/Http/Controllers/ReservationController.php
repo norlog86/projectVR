@@ -2,40 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Game;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
 
-    public function reservation($id, $reservation = null)
+    public function reservation()
     {
-        $reservation = Game::where('id', $id)->first();
-        return view('reservation', ['reservation' => $reservation]);
+        $orderId = session('ordersId');
+        if (!is_null($orderId)) {
+            $order = Reservation::findOrFail($orderId);
+        }
+        return view('reservation', compact('order'));
+
     }
 
-    public function reservations()
+    public function reservationOrder()
     {
-        $reservationId = session('reservationId');
-        if (!is_null($reservationId)) {
-            $reservation = Reservation::findOrFail($reservationId);
-        }
-        return view('reservation', compact('reservation'));
-
+        return view('order');
     }
 
     public function reservationAdd($gameId)
     {
-        $reservationId = session('reservationId');
-        if (is_null($reservationId)) {
-            $reservation = Reservation::create();
-            session(['reservationId' => $reservation->id]);
+        $orderId = session('ordersId');
+        if (is_null($orderId)) {
+            $order = Reservation::create();
+            session(['ordersId' => $order->id]);
         } else {
-            $reservation = Reservation::find($reservationId);
+            $order = Reservation::find($orderId);
         }
-        $reservation->games()->attach($gameId);
+        $order->games()->attach($gameId);
 
-        return view('reservation', compact('reservation'));
+        return view('reservation', compact('order'));
     }
 }
