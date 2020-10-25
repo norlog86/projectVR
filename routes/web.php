@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ReservationController;
+use Illuminate\Support\Facades\Auth;
 
 
 /*
@@ -34,3 +35,12 @@ Route::get('/about', [MainController::class, 'about'])->name('about');
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });
+
+Auth::routes([
+    'reset' => false,
+    'confirm'=>false,
+    'verify'=>false,
+    'admin'=>false,
+    ]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

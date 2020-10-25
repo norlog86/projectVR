@@ -8,6 +8,7 @@
     <title>@yield('title')</title>
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -29,7 +30,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/admin">Войти</a></li>
+                <li><a href="{{route('home')}}">Войти</a></li>
 
             </ul>
         </div>
@@ -39,9 +40,10 @@
 <div class="container">
     @if(session()->has('success'))
         <p class="alert alert-success">{{session()->get('success')}}</p>
-        @endif
+    @endif
     @yield('content')
 </div>
+
 </body>
 </html>
 
