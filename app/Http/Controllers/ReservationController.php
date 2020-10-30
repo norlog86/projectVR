@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use App\Models\Reservation;
+use App\Models\Time;
 use Illuminate\Http\Request;
 
 class ReservationController extends Controller
@@ -33,6 +34,9 @@ class ReservationController extends Controller
         } else {
             session()->flash('warning', 'Случилась ошибка');
         }
+
+        Reservation::eraseOrderSum();
+
         return redirect()->route('index');
     }
 
@@ -48,10 +52,10 @@ class ReservationController extends Controller
 
     public function reservationAdd($gameId)
     {
-        $orderId = session('orderId');
+        $orderId = session('ordersId');
         if (is_null($orderId)) {
             $order = Reservation::create();
-            session(['orderId' => $order->id]);
+            session(['ordersId' => $order->id]);
         } else {
             $order = Reservation::find($orderId);
         }
@@ -62,7 +66,16 @@ class ReservationController extends Controller
         }
         $game = Game::find($gameId);
 
-        session()->flash('success', 'Добавлен товар ' . $game->name);
+        Reservation::changeFullSum($game->name);
+
+//        if ($order->times()->contains($timeId)) {
+//            $errors = 'Такое время уже выбранно';
+//        } else {
+//            $order->times()->attach($timeId);
+//        }
+//        $time = Time::find($timeId);
+
+        session()->flash('success', 'Добавлена игра ' . $game->name );
 
         return redirect()->route('reservation');
     }

@@ -11,7 +11,12 @@ class Reservation extends Model
 
     public function games()
     {
-        return $this->belongsToMany(Game::class);
+        return $this->belongsToMany(Game::class)->withTimestamps();
+    }
+
+    public function times()
+    {
+        return $this->belongsToMany(Time::class);
     }
 
     public function getFullPrice()
@@ -38,7 +43,7 @@ class Reservation extends Model
             $this->user_id = 1;
             $this->sost_id = 1;
             $this->save();
-            session()->forget('orderId');
+            session()->forget('ordersId');
             return true;
         } else {
             return false;

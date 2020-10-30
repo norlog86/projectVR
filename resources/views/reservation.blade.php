@@ -19,6 +19,8 @@
                         <th>Кол-во человек</th>
                         <th>Время игры</th>
                         <th>Цена</th>
+                        <th>Дата бронирования</th>
+                        <th>Время бронирования</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -27,20 +29,23 @@
                         <tr>
                             <td>
                                 <a href="{{ route('game', $game->id) }}">
-                                    <img height="56px"
-                                         src="{{$game->img}}">
                                     {{ $game->name }}
                                 </a>
                             </td>
                             <td>{{$game->players}}</td>
                             <td>{{$game->time}}</td>
                             <td>{{ $game->price }} руб.</td>
+                            <td></td>
+                            <td></td>
+{{--                            @foreach($order->times as $time)--}}
+{{--                                <td>{{$time->name}}</td>--}}
+{{--                            @endforeach--}}
                             <td>
                                 <div class="btn-group">
                                     <form action="{{ route('reservation_remove', $game) }}" method="POST">
                                         <button type="submit" class="btn btn-danger"
                                                 href=""><span
-                                                aria-hidden="true"></span>Удалить
+                                                    aria-hidden="true"></span>Удалить
                                         </button>
                                         @csrf
                                     </form>
@@ -49,7 +54,7 @@
                         </tr>
                     @endforeach
                     <tr>
-                        <td colspan="4">Общая стоимость:</td>
+                        <td colspan="6">Общая стоимость:</td>
                         <td>{{$order->getFullPrice()}} руб.</td>
                     </tr>
                     </tbody>

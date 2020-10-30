@@ -30,7 +30,21 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{route('home')}}">Войти</a></li>
+                @guest
+                    <li><a href="{{route('register')}}">Регистрация</a></li>
+                    <li><a href="{{route('login')}}">Войти</a></li>
+                @endguest
+                @auth
+                    <li><a href="{{route('home')}}">Кабинет</a></li>
+                    <li><a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            {{ __('Выйти'.' '.'('.Auth::user()->name.')') }}
+                        </a></li>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                @endauth
 
             </ul>
         </div>

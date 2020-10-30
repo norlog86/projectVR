@@ -2,10 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function users()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
+    }
     /**
      * Create a new controller instance.
      *
@@ -23,6 +35,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $reservations = Reservation::where('sost_id', '1')->get();
+        return view('home', compact('reservations'));
     }
 }

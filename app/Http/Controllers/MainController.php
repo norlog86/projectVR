@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use App\Models\Game;
+use App\Models\Time;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 
@@ -37,8 +38,9 @@ class MainController extends Controller
 
     public function game($id, $room, $game = null )
     {
+        $times = Time::get();
         $game = Game::where('id', $id)->first();
-        return view('game', ['game' => $game]);
+        return view('game', ['game' => $game], compact('times'));
     }
 
     public function about()
