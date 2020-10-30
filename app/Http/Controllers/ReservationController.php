@@ -35,7 +35,6 @@ class ReservationController extends Controller
             session()->flash('warning', 'Случилась ошибка');
         }
 
-        Reservation::eraseOrderSum();
 
         return redirect()->route('index');
     }
@@ -52,10 +51,10 @@ class ReservationController extends Controller
 
     public function reservationAdd($gameId)
     {
-        $orderId = session('ordersId');
+        $orderId = session('orderId');
         if (is_null($orderId)) {
             $order = Reservation::create();
-            session(['ordersId' => $order->id]);
+            session(['orderId' => $order->id]);
         } else {
             $order = Reservation::find($orderId);
         }
@@ -65,15 +64,6 @@ class ReservationController extends Controller
             $order->games()->attach($gameId);
         }
         $game = Game::find($gameId);
-
-        Reservation::changeFullSum($game->name);
-
-//        if ($order->times()->contains($timeId)) {
-//            $errors = 'Такое время уже выбранно';
-//        } else {
-//            $order->times()->attach($timeId);
-//        }
-//        $time = Time::find($timeId);
 
         session()->flash('success', 'Добавлена игра ' . $game->name );
 

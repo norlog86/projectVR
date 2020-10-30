@@ -12,11 +12,6 @@ class Game extends Model
 {
     use HasFactory;
 
-//    public function getRoom()
-//    {
-//        return Room::find($this->room_id);
-//    }
-
     public function type()
     {
         return $this->hasOne('App\Models\Type_game', 'id', 'type_game_id');
@@ -26,11 +21,6 @@ class Game extends Model
     {
         return $this->hasOne('App\Models\Room', 'id', 'room_id');
     }
-
-//    public function time()
-//    {
-//        return $this->hasOne();
-//    }
 
     public function games()
     {

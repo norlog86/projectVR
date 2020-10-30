@@ -43,7 +43,7 @@ class Reservation extends Model
             $this->user_id = 1;
             $this->sost_id = 1;
             $this->save();
-            session()->forget('ordersId');
+            session()->forget('orderId');
             return true;
         } else {
             return false;
