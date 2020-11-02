@@ -24,6 +24,11 @@ class Reservation extends Model
         return $this->belongsToMany(Room::class);
     }
 
+    public function user()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function getFullPrice()
     {
         $sum = 0;
@@ -33,19 +38,19 @@ class Reservation extends Model
         return $sum;
     }
 
-    public function saveOrder($name, $phone, $date, $time, $text)
+    public function saveOrder($name, $phone, $date, $game_id, $players, $room_id, $price, $time, $text)
     {
         if ($this->sost_id == 0) {
             $this->name = $name;
             $this->phone = $phone;
             $this->date = $date;
-            $this->game_id = 1;
-            $this->players = 1;
-            $this->room_id = 1;
-            $this->price = 1;
+            $this->game_id = $game_id;
+            $this->players = $players;
+            $this->room_id = $room_id;
+            $this->price = $price;
             $this->time = $time;
             $this->text = $text;
-            $this->user_id = 1;
+            $this->user_id = null;
             $this->sost_id = 1;
             $this->save();
             session()->forget('orderId');

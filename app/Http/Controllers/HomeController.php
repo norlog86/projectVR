@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\CheckIsAdmin;
 use App\Models\Reservation;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -40,7 +40,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::where('sost_id', '1')->get();
+        if (CheckIsAdmin::class) {
+            $reservations = Reservation::get();
+        } else {
+            $reservations = Reservation::where('sost_id', 1)->get();
+        }
         return view('home', compact('reservations'));
     }
 }

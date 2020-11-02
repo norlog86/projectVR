@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -18,11 +18,16 @@ use Illuminate\Support\Facades\Auth;
 */
 Route::get('/', [MainController::class, 'index'])->name('index');
 
-Route::get('/reservation', [ReservationController::class, 'reservation'])->name('reservation');
-Route::get('/reservation/place', [ReservationController::class, 'reservationPlace'])->name('reservation_place');
 Route::post('/reservation/add/{id}', [ReservationController::class, 'reservationAdd'])->name('reservation_add');
-Route::post('/reservation/remove/{id}', [ReservationController::class, 'reservationRemove'])->name('reservation_remove');
-Route::post('/reservation/place', [ReservationController::class, 'reservationConfirm'])->name('reservation_confirm');
+Route::group([
+    'middleware' => 'reservation_not_empty',
+    'prefix' => 'reservation',
+], function () {
+    Route::get('/', [ReservationController::class, 'reservation'])->name('reservation');
+    Route::get('/place', [ReservationController::class, 'reservationPlace'])->name('reservation_place');
+    Route::post('/remove/{id}', [ReservationController::class, 'reservationRemove'])->name('reservation_remove');
+    Route::post('/place', [ReservationController::class, 'reservationConfirm'])->name('reservation_confirm');
+});
 
 Route::get('/rooms', [MainController::class, 'rooms'])->name('rooms');
 Route::get('/rooms/{room?}', [MainController::class, 'room'])->name('room');
@@ -38,9 +43,9 @@ Route::group(['prefix' => 'admin'], function () {
 
 Auth::routes([
     'reset' => false,
-    'confirm'=>false,
-    'verify'=>false,
-    'admin'=>false,
-    ]);
+    'confirm' => false,
+    'verify' => false,
+    'admin' => false,
+]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('auth');

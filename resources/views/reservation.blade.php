@@ -14,7 +14,7 @@
                             <div class="form-group">
                                 <label for="name" class="control-label col-lg-offset-3 col-lg-2">Имя: </label>
                                 <div class="col-lg-4">
-                                    <input type="text" name="name" id="name" value="" class="form-control">
+                                    <input type="text" name="name" id="name" value="" class="form-control" required>
                                 </div>
                             </div>
                             <br>
@@ -22,7 +22,7 @@
                             <div class="form-group">
                                 <label for="name" class="control-label col-lg-offset-3 col-lg-2">Телефон: </label>
                                 <div class="col-lg-4">
-                                    <input type="text" name="phone" id="phone" value="" class="form-control">
+                                    <input type="text" name="phone" id="phone" value="" class="form-control" required>
                                 </div>
                             </div>
                             <br>
@@ -31,7 +31,8 @@
                                 <label for="name" class="control-label col-lg-offset-3 col-lg-2">Кол-во
                                     игроков: </label>
                                 <div class="col-lg-4">
-                                    <input type="text" name="players" id="players" value="" class="form-control">
+                                    <input type="text" name="players" id="players" value="" class="form-control"
+                                           required>
                                 </div>
                             </div>
                             <br>
@@ -44,9 +45,10 @@
                             </div>
                         </div>
                         <br>
+                        <br>
                         <h3>Выберите дату и время брони</h3>
                         <label for="data_reservation">Дата бронирования</label>
-                        <input type="date" name="date">
+                        <input type="date" name="date" required>
                         <br>
                         <label for="time_reservation">Время броирования</label>
                         <select name="time">
@@ -71,6 +73,13 @@
                                         <a href="{{ route('game', $game->id) }}">
                                             {{ $game->name }}
                                         </a>
+                                        <br>
+                                        <input type="text" name="game_id"  value="{{$game->id}}" hidden>
+                                        <input type="text" name="players"  value="<?= $game->players?>" hidden>
+                                        <input type="text" name="room_id"  value="<?= $game->room_id?>" hidden>
+                                        <input type="text" name="price"  value="<?= $game->price?>" hidden>
+                                        <br>
+                                        <br>
                                     </td>
                                     <td>{{$game->players}}</td>
                                     <td>{{$game->time}}</td>

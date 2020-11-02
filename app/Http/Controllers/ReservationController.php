@@ -6,6 +6,7 @@ use App\Models\Game;
 use App\Models\Reservation;
 use App\Models\Time;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationController extends Controller
 {
@@ -29,7 +30,8 @@ class ReservationController extends Controller
         }
         $order = Reservation::find($orderId);
 //        dd($request->all());
-        $success = $order->saveOrder($request->name, $request->phone, $request->date, $request->time, $request->text);
+        $success = $order->saveOrder($request->name, $request->phone, $request->date, $request->game_id,
+            $request->players, $request->room_id, $request->price, $request->time, $request->text);
 
         if ($success) {
             session()->flash('success', 'Игра забронирована');
@@ -53,7 +55,7 @@ class ReservationController extends Controller
     {
         $orderId = session('orderId');
         if (is_null($orderId)) {
-            $order = Reservation::create();
+            $order = Reservation::create()->id;
             session(['orderId' => $order->id]);
         } else {
             $order = Reservation::find($orderId);
@@ -63,6 +65,12 @@ class ReservationController extends Controller
         } else {
             $order->games()->attach($gameId);
         }
+
+        if (Auth::check()) {
+            $order->user_id = Auth::id();
+            $order->save();
+        }
+
         $game = Game::find($gameId);
         session()->flash('success', 'Добавлена игра ' . $game->name);
 
