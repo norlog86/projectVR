@@ -12,7 +12,7 @@ class MainController extends Controller
 {
     public function index()
     {
-        $games =  Game::get();
+        $games = Game::get();
         $rooms = Room::get();
         return view('index', compact('games', 'rooms'));
     }
@@ -26,7 +26,7 @@ class MainController extends Controller
     public function room($path)
     {
         $room = Room::where('path', $path)->first();
-        $games =  Game::where('room_id', $room->id)->get();
+        $games = Game::where('room_id', $room->id)->get();
         return view('room', compact('room', 'games'));
     }
 
@@ -36,12 +36,12 @@ class MainController extends Controller
         return view('games', compact('games'));
     }
 
-    public function game($id, $room, $game = null )
+    public function game($id, $room, $game = null)
     {
-        $times = Time::get();
         $game = Game::where('id', $id)->first();
-        return view('game', ['game' => $game], compact('times'));
+        return view('game', ['game' => $game]);
     }
+
 
     public function about()
     {

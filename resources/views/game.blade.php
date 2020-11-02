@@ -11,18 +11,6 @@
             <p><b>Тип игры:</b> {{$game->type->name}}</p>
             <p><b>Описание:</b> {{$game->text}}</p>
             <p><b>Комната:</b> {{$game->room->name}}</p>
-            <h3>Выберите дату и время брони</h3>
-            <div></div>
-            <label for="data_reservation">Дата бронирования</label>
-            <input type="date" name="date">
-            <br>
-            <label for="time_reservation">Время броирования</label>
-            <select name="time">
-                @foreach($times as $time)
-                    <option>{{$time->name}}</option>
-                @endforeach
-            </select>
-
             <form action="{{route('reservation_add', $game->id)}}" method="POST">
                 <button type="submit" class="btn btn-success" role="button">Бронировать</button>
                 @csrf

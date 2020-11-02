@@ -36,9 +36,9 @@
                                             <th>
                                                 Время
                                             </th>
-                                            <th>
-                                                Статус
-                                            </th>
+{{--                                            <th>--}}
+{{--                                                Статус--}}
+{{--                                            </th>--}}
                                             <th>
                                                 Действия
                                             </th>
@@ -50,7 +50,7 @@
                                                 <td>{{$reservation->phone}}</td>
                                                 <td>{{$reservation->date}}</td>
                                                 <td>{{$reservation->time}}</td>
-                                                <td>{{$reservation->time}}</td>
+{{--                                                <td>{{$reservation->sost_id}}</td>--}}
                                                 <td>Открыть</td>
                                             </tr>
                                         @endforeach

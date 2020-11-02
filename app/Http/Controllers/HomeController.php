@@ -18,6 +18,11 @@ class HomeController extends Controller
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
+
+//    public function room()
+//    {
+//        return $this->hasOne('App\Models\Room', 'id', 'room_id');
+//    }
     /**
      * Create a new controller instance.
      *

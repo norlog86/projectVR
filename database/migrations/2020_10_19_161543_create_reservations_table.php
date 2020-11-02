@@ -22,7 +22,7 @@ class CreateReservationsTable extends Migration
             $table->string('players')->default(0);
             $table->integer('room_id');
             $table->double('price')->default(0);
-            $table->integer('time_id');
+            $table->time('time');
             $table->text('text')->nullable();
             $table->integer('sost_id')->default(0);
             $table->integer('user_id')->nullable();

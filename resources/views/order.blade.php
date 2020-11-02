@@ -60,17 +60,46 @@
                             </div>
                         </div>
                         <br>
-                        <div><h2>Выбранные игры</h2>
-                            @foreach($order->games as $game)
-                                <p>{{$game->name}}</p>
-                                <p>{{$game->price}}</p>
-                                <p>{{$game->players}}</p>
-                                <p>{{$game->time}}</p>
-                                <p>{{$game->room_id}}</p>
+                        <h3>Выберите дату и время брони</h3>
+                        <label for="data_reservation">Дата бронирования</label>
+                        <input type="date" name="date">
+                        <br>
+                        <label for="time_reservation">Время броирования</label>
+                        <select name="time">
+                            @foreach($times as $time)
+                                <option>{{$time->name}}</option>
                             @endforeach
-                        </div>
+                        </select>
+                        <br>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Кол-во человек</th>
+                                <th>Время игры</th>
+                                <th>Цена</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($order->games as $game)
+                                <tr>
+                                    <td>
+                                        <a href="{{ route('game', $game->id) }}">
+                                            {{ $game->name }}
+                                        </a>
+                                    </td>
+                                    <td>{{$game->players}}</td>
+                                    <td>{{$game->time}}</td>
+                                    <td>{{ $game->price }} руб.</td>
+                                    <td></td>
+                                </tr>
+                            @endforeach
+
+                            </tbody>
+                        </table>
+
                         @csrf
-                        <input type="submit" class="btn btn-success" value="Подтвердить заказ">
+                        <input type="submit" class="btn btn-success" value="Подтвердить бронирование">
                     </div>
                 </form>
             </div>

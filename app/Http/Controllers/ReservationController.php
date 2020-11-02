@@ -12,11 +12,12 @@ class ReservationController extends Controller
 
     public function reservation()
     {
+        $times = Time::get();
         $orderId = session('orderId');
         if (!is_null($orderId)) {
             $order = Reservation::findOrFail($orderId);
         }
-        return view('reservation', compact('order'));
+        return view('reservation', compact('order', 'times'));
 
     }
 
@@ -27,15 +28,14 @@ class ReservationController extends Controller
             return redirect()->route('index');
         }
         $order = Reservation::find($orderId);
-        $success = $order->saveOrder($request->name, $request->phone, $request->text);
+//        dd($request->all());
+        $success = $order->saveOrder($request->name, $request->phone, $request->date, $request->time, $request->text);
 
         if ($success) {
             session()->flash('success', 'Игра забронирована');
         } else {
             session()->flash('warning', 'Случилась ошибка');
         }
-
-
         return redirect()->route('index');
     }
 
@@ -64,8 +64,7 @@ class ReservationController extends Controller
             $order->games()->attach($gameId);
         }
         $game = Game::find($gameId);
-
-        session()->flash('success', 'Добавлена игра ' . $game->name );
+        session()->flash('success', 'Добавлена игра ' . $game->name);
 
         return redirect()->route('reservation');
     }
