@@ -50,7 +50,6 @@ class Reservation extends Model
             $this->price = $price;
             $this->time = $time;
             $this->text = $text;
-            $this->user_id = null;
             $this->sost_id = 1;
             $this->save();
             session()->forget('orderId');

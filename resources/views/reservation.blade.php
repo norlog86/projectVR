@@ -4,12 +4,17 @@
 
 @section('content')
     <div class="starter-template">
-        <h1>Подтверждение бронирования:</h1>
+        <h1>Бронирование игры:</h1>
         <div class="container">
             <div class="row justify-content-center">
                 <form action="{{route('reservation_confirm')}}" method="POST">
                     <div>
                         <p>Заполните форму для боронирования</p>
+                        @guest()
+                        <p><a href="{{route('register')}}">Зарегистрируйтесь</a> на сайте для возможность отслеживать бронирование,<br> или войдите в
+                            <a href="{{route('login')}}">личный
+                                кабинет</a></p>
+                        @endguest
                         <div class="container">
                             <div class="form-group">
                                 <label for="name" class="control-label col-lg-offset-3 col-lg-2">Имя: </label>
@@ -53,7 +58,7 @@
                         <label for="time_reservation">Время броирования</label>
                         <select name="time">
                             @foreach($times as $time)
-                                <option>{{$time->name}}</option>
+                                <option value="{{$time->id}}">{{$time->name}}</option>
                             @endforeach
                         </select>
                         <br>
@@ -74,10 +79,11 @@
                                             {{ $game->name }}
                                         </a>
                                         <br>
-                                        <input type="text" name="game_id"  value="{{$game->id}}" hidden>
-                                        <input type="text" name="players"  value="<?= $game->players?>" hidden>
-                                        <input type="text" name="room_id"  value="<?= $game->room_id?>" hidden>
-                                        <input type="text" name="price"  value="<?= $game->price?>" hidden>
+                                        <input type="text" name="game_id" value="{{$game->id}}" hidden>
+                                        <input type="text" name="players" value="{{$game->players}}" hidden>
+                                        <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
+                                        <input type="text" name="price" value="{{$game->price}}" hidden>
+                                        <input type="text" name="user_id" value="{{$game->price}}" hidden>
                                         <br>
                                         <br>
                                     </td>

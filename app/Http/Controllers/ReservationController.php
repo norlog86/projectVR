@@ -55,16 +55,15 @@ class ReservationController extends Controller
     {
         $orderId = session('orderId');
         if (is_null($orderId)) {
-            $order = Reservation::create()->id;
+            $order = Reservation::create();
             session(['orderId' => $order->id]);
         } else {
             $order = Reservation::find($orderId);
         }
-        if ($order->games->contains($gameId)) {
-            $errors = 'Такая игра уже добавлена';
-        } else {
-            $order->games()->attach($gameId);
-        }
+//        if ($orderer->games->contains($gameId)) {
+//        } else {
+//        }
+        $order->games()->attach($gameId);
 
         if (Auth::check()) {
             $order->user_id = Auth::id();
@@ -72,6 +71,7 @@ class ReservationController extends Controller
         }
 
         $game = Game::find($gameId);
+
         session()->flash('success', 'Добавлена игра ' . $game->name);
 
         return redirect()->route('reservation');

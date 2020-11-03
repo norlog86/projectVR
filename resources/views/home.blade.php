@@ -17,7 +17,7 @@
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-md-12">
-                                    <h1>Брони</h1>
+                                    <h1>Заявки на бронирование</h1>
                                     <table class="table">
                                         <tbody>
                                         <tr>
@@ -40,6 +40,9 @@
                                                 Статус
                                             </th>
                                             <th>
+                                                Пользователь
+                                            </th>
+                                            <th>
                                                 Действия
                                             </th>
                                         </tr>
@@ -51,6 +54,7 @@
                                                 <td>{{$reservation->date}}</td>
                                                 <td>{{$reservation->time}}</td>
                                                 <td>{{$reservation->sost_id}}</td>
+                                                <td>{{$reservation->user_id}}</td>
                                                 <td>Открыть</td>
                                             </tr>
                                         @endforeach
