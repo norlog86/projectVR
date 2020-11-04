@@ -4,7 +4,7 @@
     <div class="container">
         <div class="starter-template">
             <h1>{{$game->name}}</h1>
-            <img src="{{$game->img}}">
+            <img src="{{Storage::url($game->img)}}" width="200" height="250">
             <p><b>Время игры:</b> {{$game->time}}</p>
             <p><b>Цена:</b> {{$game->price}} ₽</p>
             <p><b>Количество игроков:</b> {{$game->players}}</p>

@@ -17,10 +17,11 @@ class ReservationIsNotEmpty
      */
     public function handle(Request $request, Closure $next)
     {
-        $orderId = session('orderId');
-        if (!is_null($orderId)) {
-            $order = Reservation::findOrFail($orderId);
-            if ($order->games->count() === 0) {
+        $reservationId = session('reservationId');
+
+        if (!is_null($reservationId)) {
+            $order = Reservation::findOrFail($reservationId);
+            if ($order->games->count() == 0) {
                 session()->flash('warning', 'Вы не выбрали игру для бронирования');
                 return redirect()->route('index');
             }

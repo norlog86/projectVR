@@ -2,7 +2,7 @@
     <div class="thumbnail">
         <div class="labels">
         </div>
-        <img src="{{$game->img}}" alt="{{$game->name}}">
+        <img src="{{Storage::url($game->img)}}" alt="{{$game->name}}">
         <div class="caption">
             <h3>{{$game->name}}</h3>
             <p>{{$game->price}} руб.</p>

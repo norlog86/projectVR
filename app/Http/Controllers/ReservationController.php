@@ -7,6 +7,7 @@ use App\Models\Reservation;
 use App\Models\Time;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ReservationController extends Controller
 {
@@ -14,60 +15,78 @@ class ReservationController extends Controller
     public function reservation()
     {
         $times = Time::get();
-        $orderId = session('orderId');
-        if (!is_null($orderId)) {
-            $order = Reservation::findOrFail($orderId);
+        $reservationId = session('reservationId');
+        if (!is_null($reservationId)) {
+            $reservation = Reservation::findOrFail($reservationId);
         }
-        return view('reservation', compact('order', 'times'));
+        return view('reservation', compact('reservation', 'times'));
 
     }
 
     public function reservationConfirm(Request $request)
     {
-        $orderId = session('orderId');
-        if (is_null($orderId)) {
+        $reservationId = session('reservationId');
+        if (is_null($reservationId)) {
             return redirect()->route('index');
         }
-        $order = Reservation::find($orderId);
-//        dd($request->all());
-        $success = $order->saveOrder($request->name, $request->phone, $request->date, $request->game_id,
-            $request->players, $request->room_id, $request->price, $request->time, $request->text);
+        $reservation = Reservation::find($reservationId);
 
-        if ($success) {
-            session()->flash('success', 'Игра забронирована');
+        $messages = array(
+            'unique' => 'Игра уже забронирована на выбранную дату и время',
+        );
+
+        $valid_date = Validator::make($request->all(), array(
+            'date' => 'unique:reservations,date',
+        ), $messages);
+        $valid_time = Validator::make($request->all(), array(
+            'time' => 'unique:reservations,time',
+        ), $messages);
+        $valid_game = Validator::make($request->all(), array(
+            'game_id' => 'unique:reservations,game_id',
+        ), $messages);
+        $valid_room = Validator::make($request->all(), array(
+            'room_id' => 'unique:reservations,room_id',
+        ), $messages);
+
+        if ($valid_date->fails() and $valid_time->fails() and $valid_game->fails() and $valid_room->fails()) {
+            return redirect()->back()->withErrors($valid_date->errors());
         } else {
-            session()->flash('warning', 'Случилась ошибка');
+            $reservation->saveOrder($request->name, $request->phone, $request->date, $request->game_id,
+                $request->players, $request->room_id, $request->price, $request->time, $request->text);
         }
         return redirect()->route('index');
     }
 
+
     public function reservationPlace()
     {
-        $orderId = session('orderId');
-        if (is_null($orderId)) {
+        $reservationId = session('reservationId');
+        if (is_null($reservationId)) {
             return redirect()->route('index');
         }
-        $order = Reservation::find($orderId);
-        return view('order', compact('order'));
+        $reservation = Reservation::find($reservationId);
+        return view('reservation', compact('reservation'));
     }
 
     public function reservationAdd($gameId)
     {
-        $orderId = session('orderId');
-        if (is_null($orderId)) {
-            $order = Reservation::create();
-            session(['orderId' => $order->id]);
+        $reservationId = session('reservationId');
+//        dd($reservationId);
+        if (is_null($reservationId)) {
+            $reservation = Reservation::create();
+            session(['reservationId' => $reservation->id]);
         } else {
-            $order = Reservation::find($orderId);
+            $reservation = Reservation::find($reservationId);
         }
-//        if ($orderer->games->contains($gameId)) {
-//        } else {
-//        }
-        $order->games()->attach($gameId);
+        if ($reservation->games->contains($gameId)) {
+            session()->flash('Такая уже есть');
+        } else {
+            $reservation->games()->attach($gameId);
+        }
 
         if (Auth::check()) {
-            $order->user_id = Auth::id();
-            $order->save();
+            $reservation->user_id = Auth::id();
+            $reservation->save();
         }
 
         $game = Game::find($gameId);
@@ -79,12 +98,12 @@ class ReservationController extends Controller
 
     public function reservationRemove($gameId)
     {
-        $orderId = session('orderId');
-        if (is_null($orderId)) {
+        $reservationId = session('reservationId');
+        if (is_null($reservationId)) {
             return redirect()->route('reservation');
         }
-        $order = Reservation::find($orderId);
-        $order->games()->detach($gameId);
+        $reservation = Reservation::find($reservationId);
+        $reservation->games()->detach($gameId);
 
         $game = Game::find($gameId);
 

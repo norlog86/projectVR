@@ -10,10 +10,23 @@
                 <form action="{{route('reservation_confirm')}}" method="POST">
                     <div>
                         <p>Заполните форму для боронирования</p>
+                        @error('date')
+                        <div class="alert alert-danger">{{$message}}</div>
+                        @enderror
+                        @error('time')
+                        <div class="alert alert-danger">{{$message}}</div>
+                        @enderror
+                        @error('game_id')
+                        <div class="alert alert-danger">{{$message}}</div>
+                        @enderror
+                        @error('room_id')
+                        <div class="alert alert-danger">{{$message}}</div>
+                        @enderror
                         @guest()
-                        <p><a href="{{route('register')}}">Зарегистрируйтесь</a> на сайте для возможность отслеживать бронирование,<br> или войдите в
-                            <a href="{{route('login')}}">личный
-                                кабинет</a></p>
+                            <p><a href="{{route('register')}}">Зарегистрируйтесь</a> на сайте для возможность
+                                отслеживать бронирование,<br> или войдите в
+                                <a href="{{route('login')}}">личный
+                                    кабинет</a></p>
                         @endguest
                         <div class="container">
                             <div class="form-group">
@@ -61,6 +74,7 @@
                                 <option value="{{$time->id}}">{{$time->name}}</option>
                             @endforeach
                         </select>
+
                         <br>
                         <table class="table table-striped">
                             <thead>
@@ -72,10 +86,12 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($order->games as $game)
+                            @foreach($reservation->games as $game)
                                 <tr>
                                     <td>
                                         <a href="{{ route('game', $game->id) }}">
+                                            <img src="{{Storage::url($game->img)}}" alt="{{$game->name}}" width="55"
+                                                 height="75">
                                             {{ $game->name }}
                                         </a>
                                         <br>
@@ -87,6 +103,7 @@
                                         <br>
                                         <br>
                                     </td>
+                                    <td></td>
                                     <td>{{$game->players}}</td>
                                     <td>{{$game->time}}</td>
                                     <td>{{ $game->price }} руб.</td>

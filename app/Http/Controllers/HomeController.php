@@ -2,27 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
 use App\Models\Reservation;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function users()
-    {
-        return $this->hasOne('App\Models\User', 'id', 'user_id');
-    }
-
-//    public function room()
-//    {
-//        return $this->hasOne('App\Models\Room', 'id', 'room_id');
-//    }
     /**
      * Create a new controller instance.
      *
@@ -40,14 +25,36 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if (Auth::id() == 1) {
+            session()->flash('success', 'Добавь в строку сайта /admin чтобы открыть панель администратора. Кабинет доступен только пользователю!');
+            return redirect(route('index'));
+        }
         if (Auth::check()) {
             $reservations = Reservation::where('user_id', Auth::id())->get();
         } else {
-             redirect(route('index'));
-        }
-        if (Auth::id() == 1){
-            $reservations = Reservation::get();
+            return redirect(route('index'));
         }
         return view('home', compact('reservations'));
     }
+
+    public function room()
+    {
+        return $this->hasOne('App\Models\Room', 'id', 'room_id');
+    }
+
+
+    public function show($id, $reservation = null)
+    {
+        $reservation = Reservation::where('id', $id)->first();
+        return view('show', ['reservation' => $reservation]);
+    }
+
+
+//    public function show(Reservation $reservation, $id)
+//    {
+//        $reservation = Reservation::where($id, 'id')->get();
+//        return view('show', compact('reservation'));
+//    }
+
 }
+

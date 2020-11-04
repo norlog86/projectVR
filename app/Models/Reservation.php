@@ -52,7 +52,7 @@ class Reservation extends Model
             $this->text = $text;
             $this->sost_id = 1;
             $this->save();
-            session()->forget('orderId');
+            session()->forget('reservationId');
             return true;
         } else {
             return false;

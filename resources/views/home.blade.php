@@ -17,6 +17,9 @@
                         <div class="container">
                             <div class="row justify-content-center">
                                 <div class="col-md-12">
+                                    @if(is_null($reservations))
+                                        <h3 align="center">Вы ничего не забронировали</h3>
+                                    @else
                                     <h1>Заявки на бронирование</h1>
                                     <table class="table">
                                         <tbody>
@@ -55,11 +58,12 @@
                                                 <td>{{$reservation->time}}</td>
                                                 <td>{{$reservation->sost_id}}</td>
                                                 <td>{{$reservation->user_id}}</td>
-                                                <td>Открыть</td>
+                                                <td><a  href="{{ route('show', $reservation) }}" class="btn btn-primary">Открыть</a></td>
                                             </tr>
                                         @endforeach
                                         </tbody>
                                     </table>
+                                        @endif
 
                                 </div>
                             </div>

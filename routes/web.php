@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,16 +19,21 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [MainController::class, 'index'])->name('index');
 
-Route::post('/reservation/add/{id}', [ReservationController::class, 'reservationAdd'])->name('reservation_add');
-Route::group([
-    'middleware' => 'reservation_not_empty',
-    'prefix' => 'reservation',
-], function () {
-    Route::get('/', [ReservationController::class, 'reservation'])->name('reservation');
-    Route::get('/place', [ReservationController::class, 'reservationPlace'])->name('reservation_place');
-    Route::post('/remove/{id}', [ReservationController::class, 'reservationRemove'])->name('reservation_remove');
-    Route::post('/place', [ReservationController::class, 'reservationConfirm'])->name('reservation_confirm');
+
+Route::group(['prefix' => 'reservation'], function () {
+
+    Route::post('/add/{id}', [ReservationController::class, 'reservationAdd'])->name('reservation_add');
+
+    Route::group(['middleware' => 'reservation_not_empty'], function () {
+        Route::get('/', [ReservationController::class, 'reservation'])->name('reservation');
+        Route::get('/place', [ReservationController::class, 'reservationPlace'])->name('reservation_place');
+        Route::post('/remove/{id}', [ReservationController::class, 'reservationRemove'])->name('reservation_remove');
+        Route::post('/place', [ReservationController::class, 'reservationConfirm'])->name('reservation_confirm');
+    });
 });
+
+
+Route::get('/show/{id}', [HomeController::class, 'show'])->name('show');
 
 Route::get('/rooms', [MainController::class, 'rooms'])->name('rooms');
 Route::get('/rooms/{room?}', [MainController::class, 'room'])->name('room');
