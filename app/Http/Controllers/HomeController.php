@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Game;
 use App\Models\Reservation;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,34 +36,12 @@ class HomeController extends Controller
         return view('home', compact('reservations'));
     }
 
-    public function room()
-    {
-        return $this->hasOne('App\Models\Room', 'id', 'room_id');
-    }
-
-    public function time()
-    {
-        return $this->hasOne('App\Models\Time', 'id', 'time');
-    }
-
-    public function sost()
-    {
-        return $this->hasOne('App\Models\Sost_reserv', 'id', 'sost_id');
-    }
-
-
     public function show($id, $reservation = null)
     {
         $reservation = Reservation::where('id', $id)->first();
         return view('show', ['reservation' => $reservation]);
     }
 
-
-//    public function show(Reservation $reservation, $id)
-//    {
-//        $reservation = Reservation::where($id, 'id')->get();
-//        return view('show', compact('reservation'));
-//    }
 
 }
 

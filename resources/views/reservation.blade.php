@@ -7,9 +7,57 @@
         <h1>Бронирование игры:</h1>
         <div class="container">
             <div class="row justify-content-center">
+                <table class="table table-striped-sm">
+                    <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Кол-во человек</th>
+                        <th>Время игры</th>
+                        <th>Цена</th>
+                        <th>Действие</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($reservation->games as $game)
+                        <tr>
+                            <td>
+                                <a href="{{ route('game', $game->id) }}">
+                                    <img src="{{Storage::url($game->img)}}" alt="{{$game->name}}" width="55"
+                                         height="75">
+                                    {{ $game->name }}
+                                </a>
+                                <br>
+                                <input type="text" name="game_id" value="{{$game->id}}" hidden>
+                                <input type="text" name="players" value="{{$game->players}}" hidden>
+                                <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
+                                <input type="text" name="price" value="{{$game->price}}" hidden>
+                                <input type="text" name="user_id" value="{{$game->price}}" hidden>
+                                <br>
+                                <br>
+                            </td>
+                            <td>{{$game->players}}</td>
+                            <td>{{$game->time}}</td>
+                            <td>{{ $game->price }} руб.</td>
+                            <td>
+                                <div class="btn-group">
+                                    <form action="{{ route('reservation_remove', $game) }}" method="POST">
+                                        <button type="submit" class="btn btn-danger"
+                                                href=""><span
+                                                aria-hidden="true"></span>Отменить
+                                        </button>
+                                        @csrf
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+
+                    </tbody>
+                </table>
+            </div>
                 <form action="{{route('reservation_confirm')}}" method="POST">
                     <div>
-                        <p>Заполните форму для боронирования</p>
+                        <h3>Заполните форму для боронирования</h3>
                         @error('date')
                         <div class="alert alert-danger">{{$message}}</div>
                         @enderror
@@ -76,49 +124,22 @@
                         </select>
 
                         <br>
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Название</th>
-                                <th>Кол-во человек</th>
-                                <th>Время игры</th>
-                                <th>Цена</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($reservation->games as $game)
-                                <tr>
-                                    <td>
-                                        <a href="{{ route('game', $game->id) }}">
-                                            <img src="{{Storage::url($game->img)}}" alt="{{$game->name}}" width="55"
-                                                 height="75">
-                                            {{ $game->name }}
-                                        </a>
-                                        <br>
-                                        <input type="text" name="game_id" value="{{$game->id}}" hidden>
-                                        <input type="text" name="players" value="{{$game->players}}" hidden>
-                                        <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
-                                        <input type="text" name="price" value="{{$game->price}}" hidden>
-                                        <input type="text" name="user_id" value="{{$game->price}}" hidden>
-                                        <br>
-                                        <br>
-                                    </td>
-                                    <td></td>
-                                    <td>{{$game->players}}</td>
-                                    <td>{{$game->time}}</td>
-                                    <td>{{ $game->price }} руб.</td>
-                                    <td></td>
-                                </tr>
-                            @endforeach
 
-                            </tbody>
-                        </table>
+                        @foreach($reservation->games as $game)
+                            <br>
+                            <input type="text" name="game_id" value="{{$game->id}}" hidden>
+                            <input type="text" name="players" value="{{$game->players}}" hidden>
+                            <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
+                            <input type="text" name="price" value="{{$game->price}}" hidden>
+                            <input type="text" name="user_id" value="{{$game->price}}" hidden>
+                            <br>
 
-
+                        @endforeach
                         @csrf
                         <input type="submit" class="btn btn-success" value="Подтвердить бронирование">
                     </div>
                 </form>
+
             </div>
         </div>
     </div>

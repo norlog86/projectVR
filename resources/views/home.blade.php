@@ -20,63 +20,60 @@
                                     @if(is_null($reservations))
                                         <h3 align="center">Вы ничего не забронировали</h3>
                                     @else
-                                    <h1>Заявки на бронирование</h1>
-                                    <table class="table">
-                                        <tbody>
-                                        <tr>
-                                            <th>
-                                                #
-                                            </th>
-                                            <th>
-                                                Имя
-                                            </th>
-                                            <th>
-                                                Телефон
-                                            </th>
-                                            <th>
-                                                Дата
-                                            </th>
-                                            <th>
-                                                Время
-                                            </th>
-                                            <th>
-                                                Статус
-                                            </th>
-                                            <th>
-                                                Пользователь
-                                            </th>
-                                            <th>
-                                                Действия
-                                            </th>
-                                        </tr>
-                                        @php($i = 1)
-                                        @foreach($reservations as $reservation)
+                                        <h1>Заявки на бронирование</h1>
+                                        <table class="table">
+                                            <tbody>
                                             <tr>
-                                                <td>{{$i++ .')' }}</td>
-                                                <td>{{$reservation->name}}</td>
-                                                <td>{{$reservation->phone}}</td>
-                                                <td>{{$reservation->date}}</td>
-{{--                                                <td>{{$reservation->time->name}}</td>--}}
-{{--                                                <td>{{$reservation->sost->name}}</td>--}}
-{{--                                                <td>{{$reservation->user_id}}</td>--}}
-                                                <td><a  href="{{ route('show', $reservation) }}" class="btn btn-primary">Открыть</a></td>
+                                                <th>
+                                                    #
+                                                </th>
+                                                <th>
+                                                    Имя
+                                                </th>
+                                                <th>
+                                                    Телефон
+                                                </th>
+                                                <th>
+                                                    Дата
+                                                </th>
+                                                <th>
+                                                    Время
+                                                </th>
+                                                <th>
+                                                    Пользователь
+                                                </th>
+                                                <th>
+                                                    Статус
+                                                </th>
+                                                <th>
+                                                    Действия
+                                                </th>
                                             </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                        @endif
+{{--                                            @php(dd($reservations))--}}
+                                            @php($i = 1)
+                                            @foreach($reservations as $reservation)
+                                                <tr>
+                                                    <td>{{$i++ .')' }}</td>
+                                                    <td>{{$reservation->name}}</td>
+                                                    <td>{{$reservation->phone}}</td>
+                                                    <td>{{$reservation->date}}</td>
+                                                    <td>{{$reservation->times->name}}</td>
+                                                    <td>{{$reservation->users->email}}</td>
+                                                    <td>{{$reservation->sost->name}}</td>
+                                                    <td><a href="{{ route('show', $reservation) }}"
+                                                           class="btn btn-primary">Открыть</a></td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    @endif
 
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
-    {{--        </div>--}}
-
-
 @endsection

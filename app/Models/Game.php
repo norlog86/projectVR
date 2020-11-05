@@ -32,10 +32,15 @@ class Game extends Model
         return $this->belongsTo(Room::class);
     }
 
-//    public function times()
-//    {
-//        return $this->belongsTo(Time::class);
-//    }
+    public function times()
+    {
+        return $this->belongsTo(Time::class);
+    }
+
+    public function time()
+    {
+        return $this->hasOne('App\Models\Time', 'id', 'time');
+    }
 
     public function getPrice()
     {

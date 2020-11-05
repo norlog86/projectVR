@@ -14,21 +14,30 @@ class Reservation extends Model
         return $this->belongsToMany(Game::class)->withTimestamps();
     }
 
+//    public function rooms()
+//    {
+//        return $this->belongsToMany(Room::class);
+//    }
+//
+//    public function times()
+//    {
+//        return $this->belongsToMany(Time::class);
+//    }
+
+    public function sost()
+    {
+        return $this->hasOne('App\Models\Sost_reserv', 'id', 'sost_id');
+    }
+
     public function times()
     {
-        return $this->belongsToMany(Time::class);
+        return $this->hasOne('App\Models\Time', 'id', 'time');
     }
 
-    public function rooms()
+    public function users()
     {
-        return $this->belongsToMany(Room::class);
+        return $this->hasOne('App\Models\User', 'id', 'user_id');
     }
-
-    public function user()
-    {
-        return $this->belongsToMany(User::class);
-    }
-
 //    public function getFullPrice()
 //    {
 //        $sum = 0;

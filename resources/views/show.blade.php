@@ -26,6 +26,14 @@
                             <td align="right">Телефон</td>
                             <td align="left" style="background: #cccccc">{{$reservation->phone}}</td>
                         </tr>
+                        <tr>
+                            <td align="right">Пользователь</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->users->name}}</td>
+                        </tr>
+                        <tr>
+                            <td align="right">Email</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->users->email}}</td>
+                        </tr>
                         <tr style="background: #4a5568">
                             <td><h3>Информация</h3></td>
                             <td></td>
@@ -48,11 +56,11 @@
                         </tr>
                         <tr>
                             <td align="right">Время бронирования</td>
-                            <td align="left" style="background: #cccccc">{{$reservation->time}}</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->times->name}}</td>
                         </tr>
                         <tr>
                             <td align="right">Состояние</td>
-                            <td align="left" style="background: #cccccc">{{$reservation->sost_id}}</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->sost->name}}</td>
                         </tr>
                         <tr style="background: #4a5568">
                             <td><h3>Игра</h3></td>
@@ -62,8 +70,8 @@
                             <tr>
                                 <td align="right">Игра</td>
                                 <td align="left" style="background: #cccccc">{{$game->name}}<br><img
-                                            src="{{Storage::url($game->img)}}" alt="{{$game->name}}" width="75"
-                                            height="95"></td>
+                                        src="{{Storage::url($game->img)}}" alt="{{$game->name}}" width="75"
+                                        height="95"></td>
                             </tr>
                             <tr>
                                 <td align="right">Комната</td>
@@ -74,7 +82,7 @@
                     </table>
                 </div>
             </div>
-            @if($reservation->sost_id == 2)
+            @if($reservation->sost_id == 0 || $reservation->sost_id == 2)
             @else
                 <form action="{{route('reservation_drop')}}" method="POST">
                     <div align="center">
@@ -85,6 +93,6 @@
             @endif
         </div>
     </div>
-{{--@php(dd($reservation->sost_id))--}}
+    {{--@php(dd($reservation->sost_id))--}}
 @endsection
 
