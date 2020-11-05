@@ -29,14 +29,14 @@ class Reservation extends Model
         return $this->belongsToMany(User::class);
     }
 
-    public function getFullPrice()
-    {
-        $sum = 0;
-        foreach ($this->games as $game) {
-            $sum += $game->getPrice();
-        }
-        return $sum;
-    }
+//    public function getFullPrice()
+//    {
+//        $sum = 0;
+//        foreach ($this->games as $game) {
+//            $sum += $game->getPrice();
+//        }
+//        return $sum;
+//    }
 
     public function saveOrder($name, $phone, $date, $game_id, $players, $room_id, $price, $time, $text)
     {
@@ -53,10 +53,22 @@ class Reservation extends Model
             $this->sost_id = 1;
             $this->save();
             session()->forget('reservationId');
+//            session()->flush();
             return true;
         } else {
             return false;
         }
+    }
 
+    public function dropOrder()
+    {
+        if ($this->sost_id == 1) {
+            $this->sost_id = 2;
+            $this->save();
+            session()->forget('reservationId');
+            return true;
+        } else {
+            return false;
+        }
     }
 }

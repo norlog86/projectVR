@@ -6,68 +6,85 @@
     <div class="py-4">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-12">
-{{--                    <h1>{{$reservation->user->name}}</h1>--}}
+                <div class="col-md-8">
+                    <h1>Просмотр бронирования</h1>
                     <table class="table">
                         <tbody>
-                        <tr>
-                            <th>
-                                Поле
-                            </th>
-                            <th>
-                                Значение
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>ID</td>
+                        <tr style="background: #e6e6e6">
+                            <td><b>Номер бронирования</b></td>
                             <td>{{$reservation->id}}</td>
                         </tr>
-                        <tr>
-                            <td>Имя</td>
-                            <td>{{$reservation->name}}</td>
+                        <tr style="background: #4a5568">
+                            <td><h3>Личные данные</h3></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>Телефон</td>
-                            <td>{{$reservation->phone}}</td>
+                            <td align="right">Имя</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->name}}</td>
                         </tr>
                         <tr>
-                            <td>Состояние</td>
-                            <td>{{$reservation->sost_id}}</td>
+                            <td align="right">Телефон</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->phone}}</td>
+                        </tr>
+                        <tr style="background: #4a5568">
+                            <td><h3>Информация</h3></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>Кол-во игроков</td>
-                            <td>{{$reservation->players}}</td>
+                            <td align="right">Кол-во игроков</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->players}}</td>
                         </tr>
                         <tr>
-                            <td>Пожелания</td>
-                            <td>{{$reservation->text}}</td>
+                            <td align="right">Пожелания</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->text}}</td>
+                        </tr>
+                        <tr style="background: #4a5568">
+                            <td><h3>Состояние бронирования</h3></td>
+                            <td></td>
                         </tr>
                         <tr>
-                            <td>Дата бронирования</td>
-                            <td>{{$reservation->date}}</td>
+                            <td align="right">Дата бронирования</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->date}}</td>
                         </tr>
                         <tr>
-                            <td>Время бронирования</td>
-                            <td>{{$reservation->time}}</td>
+                            <td align="right">Время бронирования</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->time}}</td>
                         </tr>
                         <tr>
-                            <td>Комната</td>
-{{--                            <td>{{$reservation->r->name}}</td>--}}
+                            <td align="right">Состояние</td>
+                            <td align="left" style="background: #cccccc">{{$reservation->sost_id}}</td>
                         </tr>
-                        <tr>
-                            <td>Игра</td>
-                            <td>{{$reservation->game}}</td>
+                        <tr style="background: #4a5568">
+                            <td><h3>Игра</h3></td>
+                            <td></td>
                         </tr>
-
-
-
-                            </td>
-                        </tr>
+                        @foreach($reservation->games as $game)
+                            <tr>
+                                <td align="right">Игра</td>
+                                <td align="left" style="background: #cccccc">{{$game->name}}<br><img
+                                            src="{{Storage::url($game->img)}}" alt="{{$game->name}}" width="75"
+                                            height="95"></td>
+                            </tr>
+                            <tr>
+                                <td align="right">Комната</td>
+                                <td align="left" style="background: #cccccc">{{$game->room->name}}</td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
             </div>
+            @if($reservation->sost_id == 2)
+            @else
+                <form action="{{route('reservation_drop')}}" method="POST">
+                    <div align="center">
+                        <input type="submit" class="btn btn-danger" value="Отменить бронирование">
+                    </div>
+                    @csrf
+                </form>
+            @endif
         </div>
     </div>
+{{--@php(dd($reservation->sost_id))--}}
 @endsection
 

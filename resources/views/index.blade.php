@@ -5,7 +5,7 @@
 @section('content')
     <div class="container">
         <h3>Какой то слайдер </h3>
-    </div>
+
     <div class="container">
         <div class="starter-template">
             <h1>Игры</h1>

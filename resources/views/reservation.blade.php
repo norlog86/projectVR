@@ -114,6 +114,7 @@
                             </tbody>
                         </table>
 
+
                         @csrf
                         <input type="submit" class="btn btn-success" value="Подтвердить бронирование">
                     </div>

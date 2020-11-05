@@ -20,12 +20,14 @@ class ReservationIsNotEmpty
         $reservationId = session('reservationId');
 
         if (!is_null($reservationId)) {
-            $order = Reservation::findOrFail($reservationId);
-            if ($order->games->count() == 0) {
-                session()->flash('warning', 'Вы не выбрали игру для бронирования');
-                return redirect()->route('index');
+            $reservation = Reservation::findOrFail($reservationId);
+            if ($reservation->games->count() > 0) {
+                return $next($request);
             }
         }
-        return $next($request);
+
+        session()->forget('reservationId');
+        session()->flash('warning', 'Вы не выбрали игру для бронирования');
+        return redirect()->route('index');
     }
 }

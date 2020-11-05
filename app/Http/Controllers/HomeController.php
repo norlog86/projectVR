@@ -42,6 +42,16 @@ class HomeController extends Controller
         return $this->hasOne('App\Models\Room', 'id', 'room_id');
     }
 
+    public function time()
+    {
+        return $this->hasOne('App\Models\Time', 'id', 'time');
+    }
+
+    public function sost()
+    {
+        return $this->hasOne('App\Models\Sost_reserv', 'id', 'sost_id');
+    }
+
 
     public function show($id, $reservation = null)
     {

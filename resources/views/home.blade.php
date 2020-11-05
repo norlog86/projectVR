@@ -49,15 +49,16 @@
                                                 Действия
                                             </th>
                                         </tr>
+                                        @php($i = 1)
                                         @foreach($reservations as $reservation)
                                             <tr>
-                                                <td></td>
+                                                <td>{{$i++ .')' }}</td>
                                                 <td>{{$reservation->name}}</td>
                                                 <td>{{$reservation->phone}}</td>
                                                 <td>{{$reservation->date}}</td>
-                                                <td>{{$reservation->time}}</td>
-                                                <td>{{$reservation->sost_id}}</td>
-                                                <td>{{$reservation->user_id}}</td>
+{{--                                                <td>{{$reservation->time->name}}</td>--}}
+{{--                                                <td>{{$reservation->sost->name}}</td>--}}
+{{--                                                <td>{{$reservation->user_id}}</td>--}}
                                                 <td><a  href="{{ route('show', $reservation) }}" class="btn btn-primary">Открыть</a></td>
                                             </tr>
                                         @endforeach

@@ -34,6 +34,7 @@ Route::group(['prefix' => 'reservation'], function () {
 
 
 Route::get('/show/{id}', [HomeController::class, 'show'])->name('show');
+Route::post('/drop', [ReservationController::class, 'reservationDrop'])->name('reservation_drop');
 
 Route::get('/rooms', [MainController::class, 'rooms'])->name('rooms');
 Route::get('/rooms/{room?}', [MainController::class, 'room'])->name('room');

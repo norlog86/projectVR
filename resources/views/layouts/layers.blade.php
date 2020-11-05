@@ -22,10 +22,11 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="{{route('games')}}">Игры</a></li>
-                <li><a href="{{route('rooms')}}">Комнаты</a></li>
-                <li><a href="{{route('about')}}">О нас</a></li>
-                <li><a href="{{route('reservation')}}">Бронирование</a></li>
+{{--                <li @if(Route::currentRouteNamed('game*')) class="active" @endif><a href="{{route('games')}}">Игры</a></li>--}}
+                <li @routeactive('game*')><a href="{{route('games')}}">Игры</a></li>
+                <li @routeactive('room*')><a href="{{route('rooms')}}">Комнаты</a></li>
+                <li @routeactive('about')><a href="{{route('about')}}">О нас</a></li>
+                <li @routeactive('reservation*')><a href="{{route('reservation')}}">Бронирование</a></li>
 
             </ul>
 

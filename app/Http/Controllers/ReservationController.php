@@ -51,8 +51,13 @@ class ReservationController extends Controller
         if ($valid_date->fails() and $valid_time->fails() and $valid_game->fails() and $valid_room->fails()) {
             return redirect()->back()->withErrors($valid_date->errors());
         } else {
-            $reservation->saveOrder($request->name, $request->phone, $request->date, $request->game_id,
+            $success = $reservation->saveOrder($request->name, $request->phone, $request->date, $request->game_id,
                 $request->players, $request->room_id, $request->price, $request->time, $request->text);
+            if ($success) {
+                session()->flash('success', 'Игра забронирована');
+            } else {
+                session()->flash('warning', 'Случилась ошибка');
+            }
         }
         return redirect()->route('index');
     }
@@ -105,10 +110,27 @@ class ReservationController extends Controller
         $reservation = Reservation::find($reservationId);
         $reservation->games()->detach($gameId);
 
+
         $game = Game::find($gameId);
 
         session()->flash('warning', 'Удалена игра  ' . $game->name);
 
         return redirect()->route('reservation');
+    }
+
+    public function reservationDrop()
+    {
+        $reservationId = session('reservationId');
+        if (is_null($reservationId)) {
+            return redirect()->route('index');
+        }
+        $reservation = Reservation::find($reservationId);
+        $success = $reservation->dropOrder();
+        if ($success) {
+            session()->flash('success', 'Бронирование отменено');
+        } else {
+            session()->flash('warning', 'Случилась ошибка');
+        }
+        return redirect()->route('home');
     }
 }
