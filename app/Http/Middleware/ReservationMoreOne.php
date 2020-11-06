@@ -6,7 +6,7 @@ use App\Models\Reservation;
 use Closure;
 use Illuminate\Http\Request;
 
-class ReservationIsNotEmpty
+class ReservationMoreOne
 {
     /**
      * Handle an incoming request.
@@ -21,12 +21,21 @@ class ReservationIsNotEmpty
 
         if (!is_null($reservationId)) {
             $reservation = Reservation::findOrFail($reservationId);
-            if ($reservation->games->count() > 0) {
+            if ($reservation->games->count() == 1) {
                 return $next($request);
             }
         }
-        session()->forget('reservationId');
-        session()->flash('warning', 'Вы не выбрали игру для бронирования');
-        return redirect()->route('index');
+        $res = session('reservationId');
+//        dd($reservationId);
+        if (!is_null($res)) {
+            session()->forget('reservationId');
+        } else {
+            session()->pull('reservationId');
+        }
+
+        session()->flash('warning', 'Выбрано больше одной игры бронирование сброшено');
+//        session()->flush();
+//        return redirect()->route('reservation');
+        return back();
     }
 }

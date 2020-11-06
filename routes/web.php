@@ -24,7 +24,14 @@ Route::group(['prefix' => 'reservation'], function () {
 
     Route::post('/add/{id}', [ReservationController::class, 'reservationAdd'])->name('reservation_add');
 
-    Route::group(['middleware' => 'reservation_not_empty'], function () {
+    Route::group([
+        'middleware' => [
+            'reservation_not_empty',
+            'reservation_more_one',
+        ],
+//        'middleware' => 'reservation_more_one',
+
+    ], function () {
         Route::get('/', [ReservationController::class, 'reservation'])->name('reservation');
         Route::get('/place', [ReservationController::class, 'reservationPlace'])->name('reservation_place');
         Route::post('/remove/{id}', [ReservationController::class, 'reservationRemove'])->name('reservation_remove');

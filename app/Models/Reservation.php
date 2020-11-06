@@ -79,7 +79,7 @@ class Reservation extends Model
         if ($this->sost_id == 1) {
             $this->sost_id = 2;
             $this->save();
-            session()->forget('reservationId');
+//            session()->forget('reservationId');
             return true;
         } else {
             return false;

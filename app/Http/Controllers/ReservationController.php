@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Reservation;
 use App\Models\Time;
+use http\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -120,12 +121,12 @@ class ReservationController extends Controller
 
     public function reservationDrop()
     {
-        $reservationId = session('reservationId');
-        if (is_null($reservationId)) {
-            return redirect()->route('index');
-        }
-        $reservation = Reservation::find($reservationId);
-        $success = $reservation->dropOrder();
+
+        $reservation = Reservation::get('sost_id');
+//        dd($reservation);
+
+        $success = $reservation->reservation->dropOrder();
+
         if ($success) {
             session()->flash('success', 'Бронирование отменено');
         } else {
