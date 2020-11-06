@@ -14,15 +14,20 @@ class Reservation extends Model
         return $this->belongsToMany(Game::class)->withTimestamps();
     }
 
-//    public function rooms()
-//    {
-//        return $this->belongsToMany(Room::class);
-//    }
-//
-//    public function times()
-//    {
-//        return $this->belongsToMany(Time::class);
-//    }
+   public function gaming()
+   {
+       return $this->hasOne('App\Models\Game', 'id', 'game_id');
+   }
+
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class);
+    }
+
+    public function time()
+    {
+        return $this->belongsToMany(Time::class);
+    }
 
     public function sost()
     {

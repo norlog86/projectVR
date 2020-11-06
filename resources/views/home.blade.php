@@ -37,19 +37,12 @@
                                                     Дата
                                                 </th>
                                                 <th>
-                                                    Время
-                                                </th>
-                                                <th>
-                                                    Пользователь
-                                                </th>
-                                                <th>
                                                     Статус
                                                 </th>
                                                 <th>
                                                     Действия
                                                 </th>
                                             </tr>
-{{--                                            @php(dd($reservations))--}}
                                             @php($i = 1)
                                             @foreach($reservations as $reservation)
                                                 <tr>
@@ -57,8 +50,6 @@
                                                     <td>{{$reservation->name}}</td>
                                                     <td>{{$reservation->phone}}</td>
                                                     <td>{{$reservation->date}}</td>
-                                                    <td>{{$reservation->times->name}}</td>
-                                                    <td>{{$reservation->users->email}}</td>
                                                     <td>{{$reservation->sost->name}}</td>
                                                     <td><a href="{{ route('show', $reservation) }}"
                                                            class="btn btn-primary">Открыть</a></td>

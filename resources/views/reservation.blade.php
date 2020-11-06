@@ -31,7 +31,6 @@
                                 <input type="text" name="players" value="{{$game->players}}" hidden>
                                 <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
                                 <input type="text" name="price" value="{{$game->price}}" hidden>
-                                <input type="text" name="user_id" value="{{$game->price}}" hidden>
                                 <br>
                                 <br>
                             </td>
@@ -55,92 +54,97 @@
                     </tbody>
                 </table>
             </div>
-                <form action="{{route('reservation_confirm')}}" method="POST">
-                    <div>
-                        <h3>Заполните форму для боронирования</h3>
-                        @error('date')
-                        <div class="alert alert-danger">{{$message}}</div>
-                        @enderror
-                        @error('time')
-                        <div class="alert alert-danger">{{$message}}</div>
-                        @enderror
-                        @error('game_id')
-                        <div class="alert alert-danger">{{$message}}</div>
-                        @enderror
-                        @error('room_id')
-                        <div class="alert alert-danger">{{$message}}</div>
-                        @enderror
-                        @guest()
-                            <p><a href="{{route('register')}}">Зарегистрируйтесь</a> на сайте для возможность
-                                отслеживать бронирование,<br> или войдите в
-                                <a href="{{route('login')}}">личный
-                                    кабинет</a></p>
-                        @endguest
-                        <div class="container">
-                            <div class="form-group">
-                                <label for="name" class="control-label col-lg-offset-3 col-lg-2">Имя: </label>
-                                <div class="col-lg-4">
-                                    <input type="text" name="name" id="name" value="" class="form-control" required>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="form-group">
-                                <label for="name" class="control-label col-lg-offset-3 col-lg-2">Телефон: </label>
-                                <div class="col-lg-4">
-                                    <input type="text" name="phone" id="phone" value="" class="form-control" required>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="form-group">
-                                <label for="name" class="control-label col-lg-offset-3 col-lg-2">Кол-во
-                                    игроков: </label>
-                                <div class="col-lg-4">
-                                    <input type="text" name="players" id="players" value="" class="form-control"
-                                           required>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="form-group">
-                                <label for="name" class="control-label col-lg-offset-3 col-lg-2">Пожелания: </label>
-                                <div class="col-lg-4">
-                                    <textarea name="text" id="text" class="form-control"></textarea>
-                                </div>
+            <form action="{{route('reservation_confirm')}}" method="POST">
+                <div>
+                    <h3>Заполните форму для боронирования</h3>
+                    @error('date')
+                    <div class="alert alert-danger">{{$message}}</div>
+                    @enderror
+                    @error('time')
+                    <div class="alert alert-danger">{{$message}}</div>
+                    @enderror
+                    @error('game_id')
+                    <div class="alert alert-danger">{{$message}}</div>
+                    @enderror
+                    @error('room_id')
+                    <div class="alert alert-danger">{{$message}}</div>
+                    @enderror
+                    @guest()
+                        <p><a href="{{route('register')}}">Зарегистрируйтесь</a> на сайте для возможность
+                            отслеживать бронирование,<br> или войдите в
+                            <a href="{{route('login')}}">личный
+                                кабинет</a></p>
+                    @endguest
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="name" class="control-label col-lg-offset-3 col-lg-2">Имя: </label>
+                            <div class="col-lg-4">
+                                <input type="text" name="name" id="name" value="" class="form-control" required>
                             </div>
                         </div>
                         <br>
                         <br>
-                        <h3>Выберите дату и время брони</h3>
-                        <label for="data_reservation">Дата бронирования</label>
-                        <input type="date" name="date" required>
+                        <div class="form-group">
+                            <label for="name" class="control-label col-lg-offset-3 col-lg-2">Телефон: </label>
+                            <div class="col-lg-4">
+                                <input type="text" name="phone" id="phone" value="" class="form-control" required>
+                            </div>
+                        </div>
                         <br>
-                        <label for="time_reservation">Время броирования</label>
-                        <select name="time">
-                            @foreach($times as $time)
-                                <option value="{{$time->id}}">{{$time->name}}</option>
-                            @endforeach
-                        </select>
-
                         <br>
-
-                        @foreach($reservation->games as $game)
-                            <br>
-                            <input type="text" name="game_id" value="{{$game->id}}" hidden>
-                            <input type="text" name="players" value="{{$game->players}}" hidden>
-                            <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
-                            <input type="text" name="price" value="{{$game->price}}" hidden>
-                            <input type="text" name="user_id" value="{{$game->price}}" hidden>
-                            <br>
-
-                        @endforeach
-                        @csrf
-                        <input type="submit" class="btn btn-success" value="Подтвердить бронирование">
+                        <div class="form-group">
+                            <label for="name" class="control-label col-lg-offset-3 col-lg-2">Кол-во
+                                игроков: </label>
+                            <div class="col-lg-4">
+                                @foreach($reservation->games as $game)
+                                    <input type="text" name="players" title="{{$game->players}}"
+                                           pattern="[0-{{$game->players}}]" id="players" value="" class="form-control"
+                                           required
+                                           oninvalid="setCustomValidity('Введите допустимое число игроков для этой игры {{$game->players}} и менее')"
+                                           onchange="try{setCustomValidity('')}catch(e){}">
+                                @endforeach
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <div class="form-group">
+                            <label for="name" class="control-label col-lg-offset-3 col-lg-2">Пожелания: </label>
+                            <div class="col-lg-4">
+                                <textarea name="text" id="text" class="form-control"></textarea>
+                            </div>
+                        </div>
                     </div>
-                </form>
+                    <br>
+                    <br>
+                    <h3>Выберите дату и время брони</h3>
+                    <label for="data_reservation">Дата бронирования</label>
+                    <input type="date" name="date" required>
+                    <br>
+                    <label for="time_reservation">Время броирования</label>
+                    <select name="time">
+                        @foreach($times as $time)
+                            <option value="{{$time->id}}">{{$time->name}}</option>
+                        @endforeach
+                    </select>
 
-            </div>
+                    <br>
+
+                    @foreach($reservation->games as $game)
+                        <br>
+                        <input type="text" name="game_id" value="{{$game->id}}" hidden>
+                        <input type="text" name="players" value="{{$game->players}}" hidden>
+                        <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
+                        <input type="text" name="price" value="{{$game->price}}" hidden>
+                        <input type="text" name="user_id" value="{{$game->price}}" hidden>
+                        <br>
+
+                    @endforeach
+                    @csrf
+                    <input type="submit" class="btn btn-success" value="Подтвердить бронирование">
+                </div>
+            </form>
+
         </div>
+    </div>
     </div>
 @endsection
