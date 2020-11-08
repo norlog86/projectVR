@@ -123,7 +123,9 @@
                     <label for="time_reservation">Время броирования</label>
                     <select name="time">
                         @foreach($times as $time)
+                            @if($time->name)
                             <option value="{{$time->id}}">{{$time->name}}</option>
+                            @endif
                         @endforeach
                     </select>
 

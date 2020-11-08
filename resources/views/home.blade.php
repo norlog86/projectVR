@@ -28,6 +28,9 @@
                                                     #
                                                 </th>
                                                 <th>
+                                                    № брони
+                                                </th>
+                                                <th>
                                                     Имя
                                                 </th>
                                                 <th>
@@ -47,6 +50,7 @@
                                             @foreach($reservations as $reservation)
                                                 <tr>
                                                     <td>{{$i++ .')' }}</td>
+                                                    <td>{{$reservation->id}}</td>
                                                     <td>{{$reservation->name}}</td>
                                                     <td>{{$reservation->phone}}</td>
                                                     <td>{{$reservation->date}}</td>

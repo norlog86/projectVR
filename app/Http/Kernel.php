@@ -56,7 +56,6 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'role_id' => \App\Http\Middleware\CheckIsAdmin::class,
         'reservation_not_empty' => \App\Http\Middleware\ReservationIsNotEmpty::class,
-        'reservation_more_one' => \App\Http\Middleware\ReservationMoreOne::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

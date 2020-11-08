@@ -15,8 +15,8 @@ class ReservationController extends Controller
 
     public function reservation()
     {
-        $times = Time::get();
         $reservationId = session('reservationId');
+        $times = Time::get();
         if (!is_null($reservationId)) {
             $reservation = Reservation::findOrFail($reservationId);
         }
@@ -84,8 +84,12 @@ class ReservationController extends Controller
         } else {
             $reservation = Reservation::find($reservationId);
         }
+//        Уберает дублированные игры
         if ($reservation->games->contains($gameId)) {
-            session()->flash('Такая уже есть');
+            session()->flash('warning', 'Такая игра уже есть');
+            //Не больше одной игры(Временная)
+        } elseif ($reservation->games->count($gameId) >= 1) {
+            session()->flash('warning', 'Больше одной игры');
         } else {
             $reservation->games()->attach($gameId);
         }
@@ -95,9 +99,9 @@ class ReservationController extends Controller
             $reservation->save();
         }
 
-        $game = Game::find($gameId);
+//        $game = Game::find($gameId);
 
-        session()->flash('success', 'Добавлена игра ' . $game->name);
+//        session()->flash('success', 'Добавлена игра ' . $game->name);
 
         return redirect()->route('reservation');
     }
@@ -117,21 +121,5 @@ class ReservationController extends Controller
         session()->flash('warning', 'Удалена игра  ' . $game->name);
 
         return redirect()->route('reservation');
-    }
-
-    public function reservationDrop()
-    {
-
-        $reservation = Reservation::get('sost_id');
-//        dd($reservation);
-
-        $success = $reservation->reservation->dropOrder();
-
-        if ($success) {
-            session()->flash('success', 'Бронирование отменено');
-        } else {
-            session()->flash('warning', 'Случилась ошибка');
-        }
-        return redirect()->route('home');
     }
 }

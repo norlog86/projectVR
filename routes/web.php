@@ -27,9 +27,7 @@ Route::group(['prefix' => 'reservation'], function () {
     Route::group([
         'middleware' => [
             'reservation_not_empty',
-            'reservation_more_one',
         ],
-//        'middleware' => 'reservation_more_one',
 
     ], function () {
         Route::get('/', [ReservationController::class, 'reservation'])->name('reservation');
