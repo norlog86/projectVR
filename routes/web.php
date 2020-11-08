@@ -31,6 +31,7 @@ Route::group(['prefix' => 'reservation'], function () {
 
     ], function () {
         Route::get('/', [ReservationController::class, 'reservation'])->name('reservation');
+        Route::post('/', [ReservationController::class, 'reservation'])->name('reservation');
         Route::get('/place', [ReservationController::class, 'reservationPlace'])->name('reservation_place');
         Route::post('/remove/{id}', [ReservationController::class, 'reservationRemove'])->name('reservation_remove');
         Route::post('/place', [ReservationController::class, 'reservationConfirm'])->name('reservation_confirm');

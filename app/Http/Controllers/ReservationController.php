@@ -36,21 +36,18 @@ class ReservationController extends Controller
             'unique' => 'Игра уже забронирована на выбранную дату и время',
         );
 
-        $valid_date = Validator::make($request->all(), array(
-            'date' => 'unique:reservations,date',
+        $valid_room = Validator::make($request->all(), array(
+            'room_id' => 'unique:reservations,room_id',
+        ), $messages);
+        $valid_game = Validator::make($request->all(), array(
+            'game' => 'unique:reservations,game',
         ), $messages);
         $valid_time = Validator::make($request->all(), array(
             'time' => 'unique:reservations,time',
         ), $messages);
-        $valid_game = Validator::make($request->all(), array(
-            'game_id' => 'unique:reservations,game_id',
-        ), $messages);
-        $valid_room = Validator::make($request->all(), array(
-            'room_id' => 'unique:reservations,room_id',
-        ), $messages);
 
-        if ($valid_date->fails() and $valid_time->fails() and $valid_game->fails() and $valid_room->fails()) {
-            return redirect()->back()->withErrors($valid_date->errors());
+        if ($valid_room->fails() and $valid_time->fails() and $valid_game->fails()) {
+            return redirect()->back()->withErrors($valid_room->errors());
         } else {
             $success = $reservation->saveOrder($request->name, $request->phone, $request->date, $request->game_id,
                 $request->players, $request->room_id, $request->price, $request->time, $request->text);
@@ -114,12 +111,19 @@ class ReservationController extends Controller
         }
         $reservation = Reservation::find($reservationId);
         $reservation->games()->detach($gameId);
+        $reservation->delete();
 
 
         $game = Game::find($gameId);
+        session()->forget('reservationId');
 
-        session()->flash('warning', 'Удалена игра  ' . $game->name);
+        session()->flash('warning', 'Отменена игра  ' . $game->name);
 
-        return redirect()->route('reservation');
+        return redirect()->route('index');
+    }
+
+    public function reservationDrop(Request $request)
+    {
+
     }
 }

@@ -42,6 +42,10 @@ class HomeController extends Controller
         return view('show', ['reservation' => $reservation]);
     }
 
+//    public function show(Reservation $reservation)
+//    {
+//        return view('show', compact('reservation'));
+//    }
 
 }
 

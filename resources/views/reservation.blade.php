@@ -28,7 +28,6 @@
                                 </a>
                                 <br>
                                 <input type="text" name="game_id" value="{{$game->id}}" hidden>
-                                <input type="text" name="players" value="{{$game->players}}" hidden>
                                 <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
                                 <input type="text" name="price" value="{{$game->price}}" hidden>
                                 <br>
@@ -36,13 +35,13 @@
                             </td>
                             <td>{{$game->players}}</td>
                             <td>{{$game->time}}</td>
-                            <td>{{ $game->price }} руб.</td>
+                            <td>{{$game->price }} руб.</td>
                             <td>
                                 <div class="btn-group">
                                     <form action="{{ route('reservation_remove', $game) }}" method="POST">
                                         <button type="submit" class="btn btn-danger"
                                                 href=""><span
-                                                aria-hidden="true"></span>Отменить
+                                                    aria-hidden="true"></span>Отменить
                                         </button>
                                         @csrf
                                     </form>
@@ -124,7 +123,7 @@
                     <select name="time">
                         @foreach($times as $time)
                             @if($time->name)
-                            <option value="{{$time->id}}">{{$time->name}}</option>
+                                <option value="{{$time->id}}">{{$time->name}}</option>
                             @endif
                         @endforeach
                     </select>
@@ -134,10 +133,8 @@
                     @foreach($reservation->games as $game)
                         <br>
                         <input type="text" name="game_id" value="{{$game->id}}" hidden>
-                        <input type="text" name="players" value="{{$game->players}}" hidden>
                         <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
                         <input type="text" name="price" value="{{$game->price}}" hidden>
-                        <input type="text" name="user_id" value="{{$game->price}}" hidden>
                         <br>
 
                     @endforeach
