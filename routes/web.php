@@ -31,7 +31,6 @@ Route::group(['prefix' => 'reservation'], function () {
 
     ], function () {
         Route::get('/', [ReservationController::class, 'reservation'])->name('reservation');
-        Route::post('/', [ReservationController::class, 'reservation'])->name('reservation');
         Route::get('/place', [ReservationController::class, 'reservationPlace'])->name('reservation_place');
         Route::post('/remove/{id}', [ReservationController::class, 'reservationRemove'])->name('reservation_remove');
         Route::post('/place', [ReservationController::class, 'reservationConfirm'])->name('reservation_confirm');
@@ -40,7 +39,8 @@ Route::group(['prefix' => 'reservation'], function () {
 
 
 Route::get('/show/{id}', [HomeController::class, 'show'])->name('show');
-Route::post('/drop', [ReservationController::class, 'reservationDrop'])->name('reservation_drop');
+Route::patch('/show/{reservation}', [ReservationController::class, 'reservationDrop'])->name('reservation_drop');
+//Route::post('/drop', [ReservationController::class, 'reservationDrop'])->name('reservation_drop');
 
 Route::get('/rooms', [MainController::class, 'rooms'])->name('rooms');
 Route::get('/rooms/{room?}', [MainController::class, 'room'])->name('room');

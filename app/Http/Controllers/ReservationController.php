@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Models\Reservation;
 use App\Models\Time;
-use http\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -32,22 +31,33 @@ class ReservationController extends Controller
         }
         $reservation = Reservation::find($reservationId);
 
+
+        $date = $request->date;
+        $time = $request->time;
         $messages = array(
             'unique' => 'Игра уже забронирована на выбранную дату и время',
         );
+//        dd($request->date, $request->time, $request->game_id, $request->room_id);
 
-        $valid_room = Validator::make($request->all(), array(
-            'room_id' => 'unique:reservations,room_id',
-        ), $messages);
-        $valid_game = Validator::make($request->all(), array(
-            'game' => 'unique:reservations,game',
+
+        $valid_date = Validator::make($request->all(), array(
+            'date' => 'unique:reservations,date',
         ), $messages);
         $valid_time = Validator::make($request->all(), array(
             'time' => 'unique:reservations,time',
         ), $messages);
+        $valid_room = Validator::make($request->all(), array(
+            'room_id' => 'unique:reservations,room_id',
+        ), $messages);
+//        $valid_game = Validator::make($request->all(), array(
+//            'game' => 'unique:reservations,game',
+//        ), $messages);
 
-        if ($valid_room->fails() and $valid_time->fails() and $valid_game->fails()) {
-            return redirect()->back()->withErrors($valid_room->errors());
+
+//        if ($valid_date->fails() and $valid_room->fails() and $valid_time->fails() and $valid_game->fails()) {
+//            return redirect()->back()->withErrors($valid_room->errors());
+        if ($valid_date->fails() and $valid_time->fails() and $valid_room->fails()){
+            return redirect()->back()->withErrors($valid_date->errors());
         } else {
             $success = $reservation->saveOrder($request->name, $request->phone, $request->date, $request->game_id,
                 $request->players, $request->room_id, $request->price, $request->time, $request->text);
@@ -122,8 +132,10 @@ class ReservationController extends Controller
         return redirect()->route('index');
     }
 
-    public function reservationDrop(Request $request)
+    public function reservationDrop(Reservation $reservation)
     {
-
+        $reservation->sost_id = 2;
+        $reservation->save();
+        return redirect()->route('home')->with('warning', 'Бронь отменена');
     }
 }

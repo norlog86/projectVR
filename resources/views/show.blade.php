@@ -70,8 +70,8 @@
                             <tr>
                                 <td align="right">Игра</td>
                                 <td align="left" style="background: #cccccc">{{$game->name}}<br><img
-                                        src="{{Storage::url($game->img)}}" alt="{{$game->name}}" width="75"
-                                        height="95"></td>
+                                            src="{{Storage::url($game->img)}}" alt="{{$game->name}}" width="75"
+                                            height="95"></td>
                             </tr>
                             <tr>
                                 <td align="right">Комната</td>
@@ -84,10 +84,11 @@
             </div>
             @if($reservation->sost_id == 0 || $reservation->sost_id == 2)
             @else
-                <form action="{{route('reservation_drop')}}" method="POST">
+                <form action="{{route('reservation_drop', $reservation->id)}}" method="POST">
                     <div align="center">
                         <input type="submit" class="btn btn-danger" value="Отменить бронирование">
                     </div>
+                    {{ method_field('PATCH') }}
                     @csrf
                 </form>
             @endif
