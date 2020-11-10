@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::id() == 1) {
+        if (Auth::id() == 1 || Auth::id() == 3) {
             session()->flash('success', 'Добавь в строку сайта /admin чтобы открыть панель администратора. Кабинет доступен только пользователю!');
             return redirect(route('index'));
         }
