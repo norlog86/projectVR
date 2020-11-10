@@ -34,9 +34,10 @@ class ReservationController extends Controller
 
         $date = $request->date;
         $time = $request->time;
+        $room = $request->room_id;
 //        $sost = Reservation::where('sost_id' == 1)->get();
         $messages = array(
-            'unique' => 'Игра уже забронирована на выбранную дату и время',
+            'unique' => 'Комната уже забронирована на выбранную дату и время',
         );
 //        dd($request->date, $request->time, $request->game_id, $request->room_id);
 
@@ -50,21 +51,21 @@ class ReservationController extends Controller
         $valid_room = Validator::make($request->all(), array(
             'room_id' => 'unique:reservations,room_id',
         ), $messages);
-        $valid_sost = Validator::make($request->all(), array(
-            'sost_id' => '1',
-        ), $messages);
 
         $sost = $reservation->where([
             ['sost_id', 1],
-            ['game_id', $request->game_id]
-            ])->get();
+            ['room_id', $request->room_id],
+            ['date', $request->date],
+            ['time', $request->time],
+        ])->get();
+        $sost_res = count($sost) == null;
 
-//        dd($sost == null);
+//        dd($sost);
+//        dd($sost_res == null);
+//        dd($valid_date->fails() and $valid_time->fails() and $valid_room->fails() );
+//        dd(($valid_date->fails() and $valid_time->fails() and $valid_room->fails()) and $sost_res == null);
 
-
-//        if ($valid_date->fails() and $valid_room->fails() and $valid_time->fails() and $valid_game->fails()) {
-//            return redirect()->back()->withErrors($valid_room->errors());
-        if ($valid_date->fails() and $valid_time->fails() and $valid_room->fails()) {
+        if ($valid_date->fails() and $valid_time->fails() and $valid_room->fails() and $sost_res == null) {
             return redirect()->back()->withErrors($valid_date->errors());
         } else {
             $success = $reservation->saveOrder($request->name, $request->phone, $request->date, $request->game_id,
