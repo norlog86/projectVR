@@ -34,6 +34,7 @@ class ReservationController extends Controller
 
         $date = $request->date;
         $time = $request->time;
+//        $sost = Reservation::where('sost_id' == 1)->get();
         $messages = array(
             'unique' => 'Игра уже забронирована на выбранную дату и время',
         );
@@ -49,14 +50,21 @@ class ReservationController extends Controller
         $valid_room = Validator::make($request->all(), array(
             'room_id' => 'unique:reservations,room_id',
         ), $messages);
-//        $valid_game = Validator::make($request->all(), array(
-//            'game' => 'unique:reservations,game',
-//        ), $messages);
+        $valid_sost = Validator::make($request->all(), array(
+            'sost_id' => '1',
+        ), $messages);
+
+        $sost = $reservation->where([
+            ['sost_id', 1],
+            ['game_id', $request->game_id]
+            ])->get();
+
+//        dd($sost == null);
 
 
 //        if ($valid_date->fails() and $valid_room->fails() and $valid_time->fails() and $valid_game->fails()) {
 //            return redirect()->back()->withErrors($valid_room->errors());
-        if ($valid_date->fails() and $valid_time->fails() and $valid_room->fails()){
+        if ($valid_date->fails() and $valid_time->fails() and $valid_room->fails()) {
             return redirect()->back()->withErrors($valid_date->errors());
         } else {
             $success = $reservation->saveOrder($request->name, $request->phone, $request->date, $request->game_id,
@@ -127,7 +135,7 @@ class ReservationController extends Controller
         $game = Game::find($gameId);
         session()->forget('reservationId');
 
-        session()->flash('warning', 'Отменена игра  ' . $game->name);
+        session()->flash('warning', 'Отменена бронирования игры  ' . $game->name);
 
         return redirect()->route('index');
     }
