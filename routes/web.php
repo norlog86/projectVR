@@ -45,8 +45,11 @@ Route::patch('/show/{reservation}', [ReservationController::class, 'reservationD
 Route::get('/rooms', [MainController::class, 'rooms'])->name('rooms');
 Route::get('/rooms/{room?}', [MainController::class, 'room'])->name('room');
 
-Route::get('/games', [MainController::class, 'games'])->name('games');
-Route::get('/games/{id?}', [MainController::class, 'game'])->name('game');
+Route::group(['prefix'=>'games'], function (){
+    Route::get('/', [MainController::class, 'games'])->name('games');
+    Route::get('/{id?}', [MainController::class, 'game'])->name('game');
+});
+
 
 Route::get('/about', [MainController::class, 'about'])->name('about');
 

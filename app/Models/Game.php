@@ -5,9 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-/**
- * Модель "Игра"
- */
 class Game extends Model
 {
     use HasFactory;
@@ -22,28 +19,28 @@ class Game extends Model
         return $this->hasOne('App\Models\Room', 'id', 'room_id');
     }
 
-    public function games()
-    {
-        return $this->belongsTo(Game::class);
-    }
-
-    public function rooms()
-    {
-        return $this->belongsTo(Room::class);
-    }
-
-    public function times()
-    {
-        return $this->belongsTo(Time::class);
-    }
+//    public function games()
+//    {
+//        return $this->belongsTo(Game::class);
+//    }
+//
+//    public function rooms()
+//    {
+//        return $this->belongsTo(Room::class);
+//    }
+//
+//    public function times()
+//    {
+//        return $this->belongsTo(Time::class);
+//    }
 
     public function time()
     {
         return $this->hasOne('App\Models\Time', 'id', 'time');
     }
-
-    public function getPrice()
-    {
-        return $this->price;
-    }
+//
+//    public function getPrice()
+//    {
+//        return $this->price;
+//    }
 }
