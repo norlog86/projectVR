@@ -12,10 +12,20 @@ use Illuminate\Support\Facades\Validator;
 class ReservationController extends Controller
 {
 
-    public function reservation()
+    public function reservation(Request $request)
     {
         $reservationId = session('reservationId');
-        $times = Time::get();
+        $reservation = Reservation::find($reservationId);
+        $sost = $reservation->where([
+            ['sost_id', 1],
+            ['room_id', $request->room_id],
+            ['date', $request->date],
+            ['time', $request->time],
+        ])->get();
+        $sost_res = count($sost) == null;
+        if ($sost_res !== null) {
+            $times = Time::get();
+        }
         if (!is_null($reservationId)) {
             $reservation = Reservation::findOrFail($reservationId);
         }

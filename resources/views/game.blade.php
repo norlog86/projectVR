@@ -8,7 +8,7 @@
             <p><b>Время игры:</b> {{$game->time}}</p>
             <p><b>Цена:</b> {{$game->price}} ₽</p>
             <p><b>Количество игроков:</b> {{$game->players}}</p>
-            <p><b>Тип игры:</b> {{$game->type->name}}</p>
+{{--            <p><b>Тип игры:</b> {{$game->type->name}}</p>--}}
             <p><b>Описание:</b> {{$game->text}}</p>
             <p><b>Комната:</b> {{$game->room->name}}</p>
             <form action="{{route('reservation_add', $game->id)}}" method="POST">

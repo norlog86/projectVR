@@ -26,14 +26,6 @@
                             <td align="right">Телефон</td>
                             <td align="left" style="background: #cccccc">{{$reservation->phone}}</td>
                         </tr>
-                        <tr>
-                            <td align="right">Пользователь</td>
-                            <td align="left" style="background: #cccccc">{{$reservation->users->name}}</td>
-                        </tr>
-                        <tr>
-                            <td align="right">Email</td>
-                            <td align="left" style="background: #cccccc">{{$reservation->users->email}}</td>
-                        </tr>
                         <tr style="background: #4a5568">
                             <td><h3>Информация</h3></td>
                             <td></td>
@@ -55,8 +47,63 @@
                             <td align="left" style="background: #cccccc">{{$reservation->date}}</td>
                         </tr>
                         <tr>
+
                             <td align="right">Время бронирования</td>
-                            <td align="left" style="background: #cccccc">{{$reservation->times->name}}</td>
+                            <td align="left" style="background: #cccccc">    <?php
+                                if ($reservation->time == 1) {
+                                    echo '9:00';
+                                } elseif ($reservation->time == 2) {
+                                    echo '9:30';
+                                } elseif ($reservation->time == 3) {
+                                    echo '10:00';
+                                } elseif ($reservation->time == 4) {
+                                    echo '10:30';
+                                } elseif ($reservation->time == 5) {
+                                    echo '11:00';
+                                } elseif ($reservation->time == 6) {
+                                    echo '11:30';
+                                } elseif ($reservation->time == 7) {
+                                    echo '12:00';
+                                } elseif ($reservation->time == 8) {
+                                    echo '12:30';
+                                } elseif ($reservation->time == 9) {
+                                    echo '13:00';
+                                } elseif ($reservation->time == 10) {
+                                    echo '13:30';
+                                } elseif ($reservation->time == 11) {
+                                    echo '14:00';
+                                } elseif ($reservation->time == 12) {
+                                    echo '14:30';
+                                } elseif ($reservation->time == 13) {
+                                    echo '15:00';
+                                } elseif ($reservation->time == 14) {
+                                    echo '15:30';
+                                } elseif ($reservation->time == 15) {
+                                    echo '16:00';
+                                } elseif ($reservation->time == 16) {
+                                    echo '16:30';
+                                } elseif ($reservation->time == 17) {
+                                    echo '17:00';
+                                } elseif ($reservation->time == 18) {
+                                    echo '17:30';
+                                } elseif ($reservation->time == 19) {
+                                    echo '18:00';
+                                } elseif ($reservation->time == 20) {
+                                    echo '18:30';
+                                } elseif ($reservation->time == 21) {
+                                    echo '19:00';
+                                } elseif ($reservation->time == 22) {
+                                    echo '19:30';
+                                } elseif ($reservation->time == 23) {
+                                    echo '20:00';
+                                } elseif ($reservation->time == 24) {
+                                    echo '20:30';
+                                } elseif ($reservation->time == 25) {
+                                    echo '21:00';
+                                } elseif ($reservation->time == 26) {
+                                    echo '21:30';
+                                }
+                                ?></td>
                         </tr>
                         <tr>
                             <td align="right">Состояние</td>
@@ -75,7 +122,8 @@
                             </tr>
                             <tr>
                                 <td align="right">Комната</td>
-                                <td align="left" style="background: #cccccc">{{$game->room->name}}</td>
+                                <td align="left" style="background: #cccccc">{{$reservation->room->name}}</td>
+
                             </tr>
                         @endforeach
                         </tbody>
