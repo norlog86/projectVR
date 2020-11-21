@@ -117,19 +117,12 @@
                     <br>
                     <h3>Выберите дату и время брони</h3>
                     <label for="data_reservation">Дата бронирования</label>
-                    <input type="date" name="date" required>
+                    <input type="text" name="date" required id="game-date">
                     <br>
                     <label for="time_reservation">Время броирования</label>
-                    <div class="row">
-                        <div class="col-md-12">
-                            @foreach($times as $time)
-                                @if($time->name)
-                                    <button class="btn btn-outline-dark">
-                                        {{$time->name}}
-                                    </button>
-                                @endif
-                            @endforeach
-                        </div>
+                    <div class="row" id="time-list">
+                        <!--Сюда придет все с аякса из файла time-list.blade-->
+
                     </div>
                     <select name="time">
                         @foreach($times as $time)
@@ -157,4 +150,38 @@
         </div>
     </div>
     </div>
+@endsection
+@section("scripts")
+    <script>
+        //При изменении даты
+        $( "#game-date" ).change(function(){
+            //ццсрф токен
+            $.ajaxSetup({headers: {'csrftoken': '{{ csrf_token() }}'}});
+            //аякс запрос
+            $.ajax({
+                type: 'get',
+                //ссылка
+                url: '/get-free-time',
+                //данные из инпута
+                data: $("#game-date").serialize(),
+                beforeSend: function (data) {
+                    //тут потом закину прелоадер и заранее опустошаем див
+                    $('#time-list').empty();
+                },
+                success: function (data) {
+                    //Закидываем данные из partials/time-list
+                    $('#time-list').html(data);
+                }
+            });
+        });
+    </script>
+<!--Date picker  -->
+    <script>
+        //Классический формат
+        jQuery('#game-date').datetimepicker({
+            dateFormat: 'yyyy-mm-dd',
+            timepicker:false,
+        });
+        $.datetimepicker.setLocale('ru');
+    </script>
 @endsection
