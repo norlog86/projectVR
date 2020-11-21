@@ -120,6 +120,17 @@
                     <input type="date" name="date" required>
                     <br>
                     <label for="time_reservation">Время броирования</label>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @foreach($times as $time)
+                                @if($time->name)
+                                    <button class="btn btn-outline-dark">
+                                        {{$time->name}}
+                                    </button>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div>
                     <select name="time">
                         @foreach($times as $time)
                             @if($time->name)

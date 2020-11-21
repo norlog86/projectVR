@@ -45,7 +45,7 @@ class ReservationController extends Controller
         $date = $request->date;
         $time = $request->time;
         $room = $request->room_id;
-//        $sost = Reservation::where('sost_id' == 1)->get();
+//      $sost = Reservation::where('sost_id' == 1)->get();
         $messages = array(
             'unique' => 'Комната уже забронирована на выбранную дату и время',
         );
@@ -68,12 +68,13 @@ class ReservationController extends Controller
             ['date', $request->date],
             ['time', $request->time],
         ])->get();
+
         $sost_res = count($sost) == null;
 
-//        dd($sost);
-//        dd($sost_res == null);
-//        dd($valid_date->fails() and $valid_time->fails() and $valid_room->fails() );
-//        dd(($valid_date->fails() and $valid_time->fails() and $valid_room->fails()) and $sost_res == null);
+        //dd($sost);
+        //dd($sost_res == null);
+        //dd($valid_date->fails() and $valid_time->fails() and $valid_room->fails() );
+        //dd(($valid_date->fails() and $valid_time->fails() and $valid_room->fails()) and $sost_res == null);
 
         if ($valid_date->fails() and $valid_time->fails() and $valid_room->fails() and $sost_res == null) {
             return redirect()->back()->withErrors($valid_date->errors());
