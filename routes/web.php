@@ -37,6 +37,7 @@ Route::group(['prefix' => 'reservation'], function () {
     });
 });
 
+Route::get('/time-list', [ReservationController::class, 'reservationTime'])->name('time-list');
 
 Route::get('/show/{id}', [HomeController::class, 'show'])->name('show');
 Route::patch('/show/{reservation}', [ReservationController::class, 'reservationDrop'])->name('reservation_drop');

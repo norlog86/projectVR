@@ -25,6 +25,10 @@ class Game extends Model
         return $this->belongsTo(Time::class);
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 
 //
 //    public function time()

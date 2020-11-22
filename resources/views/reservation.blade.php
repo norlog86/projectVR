@@ -27,7 +27,7 @@
                                     {{ $game->name }}
                                 </a>
                                 <br>
-                                <input type="text" name="game_id" value="{{$game->id}}" hidden>
+                                <input type="text" id="game-id" name="game_id" value="{{$game->id}}" hidden>
                                 <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
                                 <input type="text" name="price" value="{{$game->price}}" hidden>
                                 <br>
@@ -117,7 +117,7 @@
                     <br>
                     <h3>Выберите дату и время брони</h3>
                     <label for="data_reservation">Дата бронирования</label>
-                    <input type="text" name="date" required id="game-date">
+                    <input type="text" name="date" required id="game-date" autocomplete="off">
                     <br>
                     <label for="time_reservation">Время броирования</label>
                     <div class="row" id="time-list">
@@ -161,9 +161,9 @@
             $.ajax({
                 type: 'get',
                 //ссылка
-                url: '/get-free-time',
+                url: '/time-list',
                 //данные из инпута
-                data: $("#game-date").serialize(),
+                data: $("#game-date").serialize()+'&game_id='+$("#game-id").val(),
                 beforeSend: function (data) {
                     //тут потом закину прелоадер и заранее опустошаем див
                     $('#time-list').empty();
@@ -179,8 +179,8 @@
     <script>
         //Классический формат
         jQuery('#game-date').datetimepicker({
-            dateFormat: 'yyyy-mm-dd',
             timepicker:false,
+            format:'Y-m-d'
         });
         $.datetimepicker.setLocale('ru');
     </script>

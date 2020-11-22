@@ -33,6 +33,21 @@ class ReservationController extends Controller
 
     }
 
+    //Получение свободного времени
+
+    public function  reservationTime(Request $request){
+
+        //Проще взять игру и найти все записи связанные с ней по дате
+        $game = Game::where("id", $request->game_id)->first();
+        //Ищем по дате все записи связанные с игрой
+        $reservations = $game->reservations()->where("date", $request->date)->get();
+        //Осталось вот теперь по комнате скоректировать и огонь, нужно сделать так чтобы
+        $times = Time::all();
+
+        return view('partials.time-list', ['reservations'=>$reservations,
+            'times'=>$times])->render();
+    }
+
     public function reservationConfirm(Request $request)
     {
         $reservationId = session('reservationId');

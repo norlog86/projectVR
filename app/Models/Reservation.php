@@ -13,7 +13,10 @@ class Reservation extends Model
     {
         return $this->belongsToMany(Game::class)->withTimestamps();
     }
-
+    public function game()
+    {
+        return $this->belongsTo(Game::class,"game_id");
+    }
     public function rooms()
     {
         return $this->belongsToMany(Room::class)->withTimestamps();
@@ -24,9 +27,9 @@ class Reservation extends Model
         return $this->belongsToMany(Time::class)->withTimestamps();
     }
 
-    public function time()
+    public function timeReserv()
     {
-        return $this->belongsTo('App\Models\Time', 'id');
+        return $this->belongsTo('App\Models\Time', 'time');
     }
 
     public function sost()
