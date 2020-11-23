@@ -39,13 +39,14 @@ class ReservationController extends Controller
 
         //Проще взять игру и найти все записи связанные с ней по дате
         $game = Game::where("id", $request->game_id)->first();
+        $rooms = $game->rooms()->get();
         //Ищем по дате все записи связанные с игрой
         $reservations = $game->reservations()->where("date", $request->date)->get();
         //Осталось вот теперь по комнате скоректировать и огонь, нужно сделать так чтобы
         $times = Time::all();
 
         return view('partials.time-list', ['reservations'=>$reservations,
-            'times'=>$times])->render();
+            'times'=>$times, 'rooms'=>$rooms])->render();
     }
 
     public function reservationConfirm(Request $request)

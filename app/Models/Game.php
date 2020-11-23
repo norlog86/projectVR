@@ -15,10 +15,6 @@ class Game extends Model
         return $this->belongsTo(Game::class);
     }
 
-    public function rooms()
-    {
-        return $this->belongsTo(Room::class);
-    }
 
     public function times()
     {
@@ -46,5 +42,9 @@ class Game extends Model
         return $this->belongsTo('App\Models\Room');
     }
 
-
+    public function rooms()
+    {
+        return $this->belongsToMany('App\Models\Room', 'game_rooms',
+            'game_id', 'room_id');
+    }
 }
