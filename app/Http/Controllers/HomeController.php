@@ -24,12 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if (Auth::id() == 1 || Auth::id() == 3) {
+        if (Auth::id() !== 2 ) {
             session()->flash('success', 'Добавь в строку сайта /admin чтобы открыть панель администратора. Кабинет доступен только пользователю!');
             return redirect(route('index'));
         }
         if (Auth::check()) {
-            $reservations = Reservation::where('user_id', Auth::id())->get();
+            $reservations = Reservation::where('user_id', Auth::id())->orderBy('id', 'DESC')->get();
         } else {
             return redirect(route('index'));
         }

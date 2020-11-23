@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.3
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 06, 2020 at 07:45 AM
+-- Generation Time: Nov 23, 2020 at 07:48 PM
 -- Server version: 5.7.26
--- PHP Version: 7.4.2
+-- PHP Version: 7.3.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -69,7 +69,7 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (26, 6, 'players', 'number', 'Количество пользователей', 1, 1, 1, 1, 1, 1, '{}', 5),
 (27, 6, 'type_game_id', 'select_dropdown', 'Тип игры', 1, 1, 1, 1, 1, 1, '{}', 6),
 (28, 6, 'text', 'text_area', 'Описание', 0, 1, 1, 1, 1, 1, '{}', 8),
-(29, 6, 'room_id', 'select_dropdown', 'Комната', 1, 1, 1, 1, 1, 1, '{}', 9),
+(29, 6, 'room_id', 'select_dropdown', 'Комната', 0, 0, 0, 0, 0, 0, '{}', 9),
 (30, 6, 'img', 'image', 'Картинка', 0, 1, 1, 1, 1, 1, '{}', 11),
 (31, 6, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, '{}', 12),
 (32, 6, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 13),
@@ -105,12 +105,12 @@ INSERT INTO `data_rows` (`id`, `data_type_id`, `field`, `type`, `display_name`, 
 (65, 11, 'created_at', 'timestamp', 'Created At', 0, 0, 0, 0, 0, 0, '{}', 3),
 (66, 11, 'updated_at', 'timestamp', 'Updated At', 0, 0, 0, 0, 0, 0, '{}', 4),
 (69, 6, 'game_belongsto_type_game_relationship', 'relationship', 'Тип игры', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Models\\\\Type_game\",\"table\":\"type_games\",\"type\":\"belongsTo\",\"column\":\"type_game_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"data_rows\",\"pivot\":\"0\",\"taggable\":\"0\"}', 7),
-(70, 6, 'game_belongsto_room_relationship', 'relationship', 'Комната', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Models\\\\Room\",\"table\":\"rooms\",\"type\":\"belongsTo\",\"column\":\"room_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"data_rows\",\"pivot\":\"0\",\"taggable\":\"0\"}', 10),
 (71, 8, 'reservation_belongsto_user_relationship', 'relationship', 'Пользователь', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Models\\\\User\",\"table\":\"users\",\"type\":\"belongsTo\",\"column\":\"user_id\",\"key\":\"id\",\"label\":\"email\",\"pivot_table\":\"data_rows\",\"pivot\":\"0\",\"taggable\":\"0\"}', 17),
 (72, 8, 'reservation_belongsto_sost_reserv_relationship', 'relationship', 'Состояние', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Models\\\\Sost_reserv\",\"table\":\"sost_reservs\",\"type\":\"belongsTo\",\"column\":\"sost_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"data_rows\",\"pivot\":\"0\",\"taggable\":\"0\"}', 15),
 (73, 8, 'reservation_belongsto_game_relationship', 'relationship', 'Игра', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Models\\\\Game\",\"table\":\"games\",\"type\":\"belongsTo\",\"column\":\"game_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"data_rows\",\"pivot\":\"0\",\"taggable\":\"0\"}', 6),
 (74, 8, 'reservation_belongsto_room_relationship', 'relationship', 'Комната', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Models\\\\Room\",\"table\":\"rooms\",\"type\":\"belongsTo\",\"column\":\"room_id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"data_rows\",\"pivot\":\"0\",\"taggable\":\"0\"}', 9),
-(75, 8, 'reservation_belongsto_time_relationship', 'relationship', 'Время', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Models\\\\Time\",\"table\":\"times\",\"type\":\"belongsTo\",\"column\":\"time\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"data_rows\",\"pivot\":\"0\",\"taggable\":\"0\"}', 12);
+(75, 8, 'reservation_belongsto_time_relationship', 'relationship', 'Время', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Models\\\\Time\",\"table\":\"times\",\"type\":\"belongsTo\",\"column\":\"time\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"data_rows\",\"pivot\":\"0\",\"taggable\":\"0\"}', 12),
+(76, 6, 'game_belongstomany_room_relationship', 'relationship', 'Комнаты', 0, 1, 1, 1, 1, 1, '{\"model\":\"App\\\\Models\\\\Room\",\"table\":\"rooms\",\"type\":\"belongsToMany\",\"column\":\"id\",\"key\":\"id\",\"label\":\"name\",\"pivot_table\":\"game_rooms\",\"pivot\":\"1\",\"taggable\":\"0\"}', 14);
 
 -- --------------------------------------------------------
 
@@ -144,9 +144,9 @@ INSERT INTO `data_types` (`id`, `name`, `slug`, `display_name_singular`, `displa
 (1, 'users', 'users', 'User', 'Users', 'voyager-person', 'TCG\\Voyager\\Models\\User', 'TCG\\Voyager\\Policies\\UserPolicy', 'TCG\\Voyager\\Http\\Controllers\\VoyagerUserController', '', 1, 0, NULL, '2020-10-17 08:33:27', '2020-10-17 08:33:27'),
 (2, 'menus', 'menus', 'Menu', 'Menus', 'voyager-list', 'TCG\\Voyager\\Models\\Menu', NULL, '', '', 1, 0, NULL, '2020-10-17 08:33:27', '2020-10-17 08:33:27'),
 (3, 'roles', 'roles', 'Role', 'Roles', 'voyager-lock', 'TCG\\Voyager\\Models\\Role', NULL, 'TCG\\Voyager\\Http\\Controllers\\VoyagerRoleController', '', 1, 0, NULL, '2020-10-17 08:33:27', '2020-10-17 08:33:27'),
-(6, 'games', 'games', 'Игра', 'Игры', 'voyager-controller', 'App\\Models\\Game', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-11-03 03:30:00', '2020-11-03 04:20:37'),
+(6, 'games', 'games', 'Игра', 'Игры', 'voyager-controller', 'App\\Models\\Game', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-11-03 03:30:00', '2020-11-23 16:12:59'),
 (7, 'rooms', 'rooms', 'Комната', 'Комнаты', 'voyager-shop', 'App\\Models\\Room', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-11-03 03:32:05', '2020-11-03 04:23:14'),
-(8, 'reservations', 'reservations', 'Бронирование', 'Бронирования', 'voyager-bookmark', 'App\\Models\\Reservation', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-11-03 03:38:23', '2020-11-03 04:53:04'),
+(8, 'reservations', 'reservations', 'Бронирование', 'Бронирования', 'voyager-bookmark', 'App\\Models\\Reservation', NULL, NULL, NULL, 1, 1, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":\"game_id\",\"scope\":null}', '2020-11-03 03:38:23', '2020-11-23 16:27:40'),
 (9, 'times', 'times', 'Время', 'Время', 'voyager-watch', 'App\\Models\\Time', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null}', '2020-11-03 03:39:23', '2020-11-03 03:39:23'),
 (11, 'type_games', 'type-games', 'Тип игры', 'Типы игры', 'voyager-params', 'App\\Models\\Type_game', NULL, NULL, NULL, 1, 0, '{\"order_column\":null,\"order_display_column\":null,\"order_direction\":\"asc\",\"default_search_key\":null,\"scope\":null}', '2020-11-03 04:01:12', '2020-11-03 04:03:34');
 
@@ -180,7 +180,7 @@ CREATE TABLE `games` (
   `players` double NOT NULL DEFAULT '0',
   `type_game_id` int(11) NOT NULL,
   `text` text COLLATE utf8mb4_unicode_ci,
-  `room_id` int(11) NOT NULL,
+  `room_id` int(11) DEFAULT NULL,
   `img` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -191,7 +191,7 @@ CREATE TABLE `games` (
 --
 
 INSERT INTO `games` (`id`, `name`, `time`, `price`, `players`, `type_game_id`, `text`, `room_id`, `img`, `created_at`, `updated_at`) VALUES
-(1, 'Mario Vr', '00:30:00', 500, 2, 2, 'Marion on VR', 1, 'games/November2020/Go42PFWBfAye0YqCqmaX.png', NULL, '2020-11-03 03:41:29'),
+(1, 'Mario Vr', '00:30:00', 500, 2, 1, 'Marion on VR', 1, 'games/November2020/Go42PFWBfAye0YqCqmaX.png', NULL, '2020-11-17 16:19:58'),
 (2, 'God of war VR', '00:30:00', 1000, 1, 1, NULL, 2, NULL, NULL, NULL),
 (3, 'Uncharted of VR', '01:00:00', 700, 1, 1, NULL, 3, NULL, NULL, NULL),
 (4, 'Batman VR', '00:30:00', 1000, 2, 1, NULL, 2, NULL, NULL, NULL);
@@ -217,8 +217,6 @@ CREATE TABLE `game_reservation` (
 
 INSERT INTO `game_reservation` (`id`, `reservation_id`, `game_id`, `time_id`, `created_at`, `updated_at`) VALUES
 (58, 46, 4, 0, '2020-10-29 15:33:05', '2020-10-29 15:33:05'),
-(59, 46, 3, 0, '2020-10-29 15:35:32', '2020-10-29 15:35:32'),
-(60, 47, 2, 0, '2020-10-29 15:40:48', '2020-10-29 15:40:48'),
 (61, 47, 3, 0, '2020-10-29 15:41:00', '2020-10-29 15:41:00'),
 (62, 2, 2, 0, '2020-10-31 10:29:31', '2020-10-31 10:29:31'),
 (63, 3, 4, 0, '2020-10-31 10:30:17', '2020-10-31 10:30:17'),
@@ -250,7 +248,44 @@ INSERT INTO `game_reservation` (`id`, `reservation_id`, `game_id`, `time_id`, `c
 (95, 30, 1, 0, '2020-11-05 04:41:17', '2020-11-05 04:41:17'),
 (97, 32, 1, 0, '2020-11-05 05:44:48', '2020-11-05 05:44:48'),
 (99, 34, 4, 0, '2020-11-05 06:00:42', '2020-11-05 06:00:42'),
-(100, 35, 4, 0, '2020-11-05 06:28:18', '2020-11-05 06:28:18');
+(100, 35, 4, 0, '2020-11-05 06:28:18', '2020-11-05 06:28:18'),
+(101, 36, 1, 0, '2020-11-21 06:14:51', '2020-11-21 06:14:51'),
+(102, 37, 1, 0, '2020-11-21 06:27:02', '2020-11-21 06:27:02'),
+(103, 39, 2, 0, '2020-11-21 08:16:11', '2020-11-21 08:16:11'),
+(104, 40, 2, 0, '2020-11-21 08:49:04', '2020-11-21 08:49:04'),
+(107, 44, 1, 0, '2020-11-21 14:02:08', '2020-11-21 14:02:08'),
+(118, 57, 4, 0, '2020-11-21 14:09:55', '2020-11-21 14:09:55'),
+(119, 58, 1, 0, '2020-11-21 16:25:04', '2020-11-21 16:25:04'),
+(121, 60, 1, 0, '2020-11-22 14:51:55', '2020-11-22 14:51:55'),
+(122, 61, 1, 0, '2020-11-23 01:57:23', '2020-11-23 01:57:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `game_rooms`
+--
+
+CREATE TABLE `game_rooms` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `game_id` int(11) DEFAULT NULL,
+  `room_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `game_rooms`
+--
+
+INSERT INTO `game_rooms` (`id`, `game_id`, `room_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '2019-11-16 15:55:31', '2019-11-02 15:57:31'),
+(2, 1, 2, '2020-11-12 06:15:14', '2020-11-20 06:15:14'),
+(3, 1, 3, '2020-11-11 06:15:14', '2020-11-19 06:15:14'),
+(7, 5, 1, NULL, NULL),
+(8, 5, 3, NULL, NULL),
+(9, 6, 1, NULL, NULL),
+(10, 7, 1, NULL, NULL),
+(11, 8, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -300,19 +335,19 @@ CREATE TABLE `menu_items` (
 
 INSERT INTO `menu_items` (`id`, `menu_id`, `title`, `url`, `target`, `icon_class`, `color`, `parent_id`, `order`, `created_at`, `updated_at`, `route`, `parameters`) VALUES
 (1, 1, 'Dashboard', '', '_self', 'voyager-boat', NULL, NULL, 1, '2020-10-17 08:33:27', '2020-10-17 08:33:27', 'voyager.dashboard', NULL),
-(2, 1, 'Media', '', '_self', 'voyager-images', NULL, NULL, 5, '2020-10-17 08:33:27', '2020-10-17 08:33:27', 'voyager.media.index', NULL),
-(3, 1, 'Users', '', '_self', 'voyager-person', NULL, NULL, 3, '2020-10-17 08:33:27', '2020-10-17 08:33:27', 'voyager.users.index', NULL),
-(4, 1, 'Roles', '', '_self', 'voyager-lock', NULL, NULL, 2, '2020-10-17 08:33:27', '2020-10-17 08:33:27', 'voyager.roles.index', NULL),
-(5, 1, 'Tools', '', '_self', 'voyager-tools', NULL, NULL, 9, '2020-10-17 08:33:27', '2020-10-17 08:33:27', NULL, NULL),
-(6, 1, 'Menu Builder', '', '_self', 'voyager-list', NULL, 5, 10, '2020-10-17 08:33:27', '2020-10-17 08:33:27', 'voyager.menus.index', NULL),
-(7, 1, 'Database', '', '_self', 'voyager-data', NULL, 5, 11, '2020-10-17 08:33:27', '2020-10-17 08:33:27', 'voyager.database.index', NULL),
+(2, 1, 'Медиа', '', '_self', 'voyager-images', '#000000', NULL, 5, '2020-10-17 08:33:27', '2020-11-21 08:54:13', 'voyager.media.index', 'null'),
+(3, 1, 'Пользователи', '', '_self', 'voyager-person', '#000000', NULL, 3, '2020-10-17 08:33:27', '2020-11-21 08:54:04', 'voyager.users.index', 'null'),
+(4, 1, 'Роли', '', '_self', 'voyager-lock', '#000000', NULL, 2, '2020-10-17 08:33:27', '2020-11-21 08:53:51', 'voyager.roles.index', 'null'),
+(5, 1, 'Инструменты', '', '_self', 'voyager-tools', '#000000', NULL, 9, '2020-10-17 08:33:27', '2020-11-21 08:55:14', NULL, ''),
+(6, 1, 'Работа с меню', '', '_self', 'voyager-list', '#000000', 5, 10, '2020-10-17 08:33:27', '2020-11-21 08:55:27', 'voyager.menus.index', 'null'),
+(7, 1, 'Базы данных', '', '_self', 'voyager-data', '#000000', 5, 11, '2020-10-17 08:33:27', '2020-11-21 08:55:35', 'voyager.database.index', 'null'),
 (8, 1, 'Compass', '', '_self', 'voyager-compass', NULL, 5, 12, '2020-10-17 08:33:27', '2020-10-17 08:33:27', 'voyager.compass.index', NULL),
 (9, 1, 'BREAD', '', '_self', 'voyager-bread', NULL, 5, 13, '2020-10-17 08:33:27', '2020-10-17 08:33:27', 'voyager.bread.index', NULL),
-(10, 1, 'Settings', '', '_self', 'voyager-settings', NULL, NULL, 14, '2020-10-17 08:33:27', '2020-10-17 08:33:27', 'voyager.settings.index', NULL),
+(10, 1, 'Настройки', '', '_self', 'voyager-settings', '#000000', NULL, 14, '2020-10-17 08:33:27', '2020-11-21 08:55:46', 'voyager.settings.index', 'null'),
 (11, 1, 'Hooks', '', '_self', 'voyager-hook', NULL, 5, 13, '2020-10-17 08:33:27', '2020-10-17 08:33:27', 'voyager.hooks', NULL),
-(12, 1, 'Игры', '', '_self', 'voyager-controller', NULL, NULL, 15, '2020-11-03 03:30:00', '2020-11-03 03:30:00', 'voyager.games.index', NULL),
+(12, 1, 'Игры', '', '_self', 'voyager-controller', '#000000', NULL, 15, '2020-11-03 03:30:00', '2020-11-21 08:55:53', 'voyager.games.index', 'null'),
 (13, 1, 'Комнаты', '', '_self', 'voyager-shop', NULL, NULL, 16, '2020-11-03 03:32:06', '2020-11-03 03:32:06', 'voyager.rooms.index', NULL),
-(14, 1, 'Бронирования', '', '_self', 'voyager-watch', NULL, NULL, 17, '2020-11-03 03:38:23', '2020-11-03 03:38:23', 'voyager.reservations.index', NULL),
+(14, 1, 'Бронирования', '', '_self', 'voyager-bookmark', '#000000', NULL, 17, '2020-11-03 03:38:23', '2020-11-21 08:56:39', 'voyager.reservations.index', 'null'),
 (15, 1, 'Время', '', '_self', 'voyager-watch', NULL, NULL, 18, '2020-11-03 03:39:24', '2020-11-03 03:39:24', 'voyager.times.index', NULL),
 (16, 1, 'Типы игры', '', '_self', 'voyager-params', NULL, NULL, 19, '2020-11-03 04:01:12', '2020-11-03 04:01:12', 'voyager.type-games.index', NULL);
 
@@ -470,10 +505,13 @@ CREATE TABLE `permission_role` (
 
 INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (1, 1),
+(1, 3),
 (2, 1),
 (3, 1),
 (4, 1),
+(4, 3),
 (5, 1),
+(5, 3),
 (6, 1),
 (7, 1),
 (8, 1),
@@ -485,9 +523,13 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (14, 1),
 (15, 1),
 (16, 1),
+(16, 3),
 (17, 1),
+(17, 3),
 (18, 1),
+(18, 3),
 (19, 1),
+(19, 3),
 (20, 1),
 (21, 1),
 (22, 1),
@@ -496,30 +538,53 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (25, 1),
 (26, 1),
 (27, 1),
+(27, 3),
 (28, 1),
+(28, 3),
 (29, 1),
+(29, 3),
 (30, 1),
+(30, 3),
 (31, 1),
+(31, 3),
 (32, 1),
+(32, 3),
 (33, 1),
+(33, 3),
 (34, 1),
+(34, 3),
 (35, 1),
+(35, 3),
 (36, 1),
+(36, 3),
 (37, 1),
+(37, 3),
 (38, 1),
+(38, 3),
 (39, 1),
+(39, 3),
 (40, 1),
 (41, 1),
 (42, 1),
+(42, 3),
 (43, 1),
+(43, 3),
 (44, 1),
+(44, 3),
 (45, 1),
+(45, 3),
 (46, 1),
+(46, 3),
 (47, 1),
+(47, 3),
 (48, 1),
+(48, 3),
 (49, 1),
+(49, 3),
 (50, 1),
-(51, 1);
+(50, 3),
+(51, 1),
+(51, 3);
 
 -- --------------------------------------------------------
 
@@ -550,14 +615,17 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`id`, `name`, `phone`, `date`, `game_id`, `players`, `room_id`, `price`, `time`, `text`, `sost_id`, `user_id`, `user`, `created_at`, `updated_at`) VALUES
-(24, '1', '1', '2020-12-12', 1, '2', 1, 500, 2, '1', 1, 2, NULL, '2020-11-05 03:32:41', '2020-11-05 03:32:51'),
-(25, '1', '1', '2000-12-12', 1, '2', 1, 500, 2, '1', 2, 2, NULL, '2020-11-05 03:34:10', '2020-11-05 03:34:23'),
-(30, 'Владислав', '8918', '2020-12-01', 1, '2', 1, 500, 1, NULL, 1, NULL, NULL, '2020-11-05 04:41:16', '2020-11-05 04:42:50'),
-(31, NULL, NULL, NULL, NULL, '0', NULL, 0, NULL, NULL, 0, 1, NULL, '2020-11-05 05:43:39', '2020-11-05 05:43:40'),
-(32, 'Артем', '8918', '2020-12-12', 1, '2', 1, 500, 3, NULL, 1, 2, NULL, '2020-11-05 05:44:48', '2020-11-05 05:45:44'),
-(33, NULL, NULL, NULL, NULL, '0', NULL, 0, NULL, NULL, 0, 2, NULL, '2020-11-05 05:46:16', '2020-11-05 05:46:16'),
-(34, 'Тестовый', '8918', '2000-12-12', 4, '2', 2, 1000, 2, '123', 1, 2, NULL, '2020-11-05 06:00:42', '2020-11-05 06:01:05'),
-(35, NULL, NULL, NULL, NULL, '0', NULL, 0, NULL, NULL, 0, 2, NULL, '2020-11-05 06:28:18', '2020-11-05 06:28:18');
+(1, '1', '1', '2020-12-12', 1, '2', 1, 500, 2, '1', 1, 2, NULL, '2020-11-05 03:32:41', '2020-11-23 16:23:28'),
+(2, '1', '1', '2020-12-12', 1, '2', 2, 500, 2, '1', 2, 2, NULL, '2020-11-05 03:34:10', '2020-11-23 16:23:28'),
+(3, 'Владислав', '8918', '2020-12-01', 1, '2', 1, 500, 1, NULL, 1, NULL, NULL, '2020-11-05 04:41:16', '2020-11-23 16:23:28'),
+(4, 'Артем', '8918', '2020-12-12', 1, '2', 1, 500, 3, NULL, 2, 2, NULL, '2020-11-05 05:44:48', '2020-11-23 16:23:28'),
+(5, 'Тестовый', '8918', '2000-12-12', 4, '2', 2, 1000, 2, '123', 1, 2, NULL, '2020-11-05 06:00:42', '2020-11-23 16:23:28'),
+(6, '1', '1', '2020-12-12', 1, '1', 1, 500, 2, '1', 1, NULL, NULL, '2020-11-21 06:14:50', '2020-11-23 16:23:28'),
+(7, '1', '1', '2020-12-12', 1, '1', 1, 500, 1, '1', 1, NULL, NULL, '2020-11-21 06:27:02', '2020-11-23 16:23:28'),
+(8, '1', '1', '2020-12-12', 2, '1', 2, 1000, 1, '1', 1, 1, NULL, '2020-11-21 08:16:11', '2020-11-23 16:23:28'),
+(9, '1', '1', '2020-12-12', 2, '1', 2, 1000, 26, '1', 2, 2, NULL, '2020-11-21 08:49:04', '2020-11-23 16:23:28'),
+(10, '1', '1', '2020-12-12', 1, '2', 2, 500, 4, '1', 2, 2, NULL, '2020-11-05 03:34:10', '2020-11-23 16:23:28'),
+(11, '1', '1', '2020-12-12', 1, '2', 2, 500, 7, '1', 2, 2, NULL, '2020-11-05 03:34:10', '2020-11-23 16:23:28');
 
 -- --------------------------------------------------------
 
@@ -592,8 +660,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'Administrator', '2020-10-17 08:33:27', '2020-10-17 08:33:27'),
-(2, 'user', 'Normal User', '2020-10-17 08:33:27', '2020-10-17 08:33:27');
+(1, 'admin', 'Администратор', '2020-10-17 08:33:27', '2020-11-23 16:13:43'),
+(2, 'user', 'Пользователь', '2020-10-17 08:33:27', '2020-11-23 16:13:54'),
+(3, 'moderator', 'Модератор', '2020-11-23 16:14:35', '2020-11-23 16:14:35');
 
 -- --------------------------------------------------------
 
@@ -694,7 +763,6 @@ CREATE TABLE `times` (
 --
 
 INSERT INTO `times` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(0, 'Не выбрано', NULL, NULL),
 (1, '9:00', NULL, NULL),
 (2, '9:30', NULL, NULL),
 (3, '10:00', NULL, NULL),
@@ -786,7 +854,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `avatar`, `email_verified_at`, `password`, `remember_token`, `settings`, `created_at`, `updated_at`) VALUES
 (1, 1, 'VladS', 'admin@email.com', 'users/default.png', NULL, '$2y$10$.vyYvXqNxm0sJcqe821KPexRKbeKHTFs5TBOrDUSrbojYoYV7QByO', NULL, '{\"locale\":\"ru\"}', '2020-10-17 08:37:58', '2020-10-29 13:08:37'),
-(2, 2, 'Vlad', 'vlad@mail.ru', 'users/default.png', NULL, '$2y$10$G.7wGM7yN7ZLu4bKjJX5n.h1/hk7WlWflBCRxVMfk..ZnCL4LDd9S', NULL, '{\"locale\":\"ru\"}', '2020-10-25 09:46:41', '2020-10-29 13:08:24');
+(2, 2, 'Vlad', 'vlad@mail.ru', 'users/default.png', NULL, '$2y$10$G.7wGM7yN7ZLu4bKjJX5n.h1/hk7WlWflBCRxVMfk..ZnCL4LDd9S', NULL, '{\"locale\":\"ru\"}', '2020-10-25 09:46:41', '2020-10-29 13:08:24'),
+(3, 3, 'Модератор', 'moder@mail.ru', 'users/default.png', NULL, '$2y$10$U89iAok68mksFiP8PEKYu.Ey8aRe/.VOTGIUOpARYhj8YhTIcmvKa', NULL, '{\"locale\":\"ru\"}', '2020-11-23 16:15:24', '2020-11-23 16:15:24');
 
 -- --------------------------------------------------------
 
@@ -835,6 +904,12 @@ ALTER TABLE `games`
 -- Indexes for table `game_reservation`
 --
 ALTER TABLE `game_reservation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `game_rooms`
+--
+ALTER TABLE `game_rooms`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -959,13 +1034,13 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT for table `data_rows`
 --
 ALTER TABLE `data_rows`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `data_types`
 --
 ALTER TABLE `data_types`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -977,13 +1052,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `games`
 --
 ALTER TABLE `games`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `game_reservation`
 --
 ALTER TABLE `game_reservation`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+
+--
+-- AUTO_INCREMENT for table `game_rooms`
+--
+ALTER TABLE `game_rooms`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `menus`
@@ -995,7 +1076,7 @@ ALTER TABLE `menus`
 -- AUTO_INCREMENT for table `menu_items`
 --
 ALTER TABLE `menu_items`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -1007,13 +1088,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT for table `reservation_time`
@@ -1025,7 +1106,7 @@ ALTER TABLE `reservation_time`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `rooms`
@@ -1037,19 +1118,19 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `sost_reservs`
 --
 ALTER TABLE `sost_reservs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `times`
 --
 ALTER TABLE `times`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `translations`
@@ -1061,13 +1142,13 @@ ALTER TABLE `translations`
 -- AUTO_INCREMENT for table `type_games`
 --
 ALTER TABLE `type_games`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
