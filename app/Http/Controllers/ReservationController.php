@@ -42,11 +42,12 @@ class ReservationController extends Controller
         $rooms = $game->rooms()->get();
         //Ищем по дате все записи связанные с игрой
         $reservations = $game->reservations()->where("date", $request->date)->get();
+        $reserv_date = $request->date;
         //Осталось вот теперь по комнате скоректировать и огонь, нужно сделать так чтобы
         $times = Time::all();
 
         return view('partials.time-list', ['reservations'=>$reservations,
-            'times'=>$times, 'rooms'=>$rooms])->render();
+            'times'=>$times, 'rooms'=>$rooms, 'reserv_date'=>$reserv_date])->render();
     }
 
     public function reservationConfirm(Request $request)

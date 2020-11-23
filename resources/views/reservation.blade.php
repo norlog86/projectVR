@@ -174,6 +174,12 @@
                 }
             });
         });
+
+        $(".btn-time").click(function(e){
+            alert("dasd");
+            //$(this).data("time")
+        });
+
     </script>
 <!--Date picker  -->
     <script>
