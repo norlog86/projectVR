@@ -1,16 +1,12 @@
 <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
+    <a href="{{route('game', $game->id)}}" class="game-thumbnail">
         <div class="labels">
         </div>
-        <img src="{{Storage::url($game->img)}}" alt="{{$game->name}}">
-        <div class="caption">
-            <h3>{{$game->name}}</h3>
-            <p>{{$game->price}} руб.</p>
-            <p>
-                <a href="{{route('game', $game->game_id)}}"
-                   class="btn btn-default"
-                   role="button">Подробнее</a>
-            </p>
+        <div class="game-img-container">
+            <img src="{{Storage::url($game->img)}}" alt="{{$game->name}}">
         </div>
-    </div>
+        <div class="game-name">
+            <h3>{{$game->name}}</h3>
+        </div>
+    </a>
 </div>

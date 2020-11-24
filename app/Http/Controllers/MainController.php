@@ -11,10 +11,13 @@ class MainController extends Controller
 {
     public function index()
     {
+        /*
         $games = DB::table('games')
             ->join('game_rooms', 'games.id', '=', 'game_rooms.game_id')
-            ->get();
+            ->get();*/
+        $games = Game::all();
         $rooms = Room::get();
+
         return view('index', compact('games', 'rooms'));
     }
 
@@ -46,6 +49,7 @@ class MainController extends Controller
     public function game($id, $room, $game = null)
     {
         $game = Game::where('id', $id)->first();
+
         return view('game', ['game' => $game]);
     }
 

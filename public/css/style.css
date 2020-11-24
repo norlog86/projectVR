@@ -1,0 +1,100 @@
+/**************************Fonts
+
+ */
+
+body{
+    color: #fff;
+    background-color: #050411;
+}
+
+.pt-150{
+    padding-top: 150px;
+}
+/**********************************Main elements
+*******************************************************************************************/
+
+.primary-btn{
+    display: inline-block;
+    background: linear-gradient(90deg,#36C0E7 6.68%,#4B51EA 84.84%,#4B51EA 87.36%);
+    box-shadow: 0 15px 60px rgba(66,130,233,.45);
+    border-radius: 15px;
+    border: 0;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 21px;
+    padding: 25px 68px;
+}.primary-btn:hover{
+     box-shadow: 0 15px 80px rgba(57, 182, 231, 0.67);
+ }
+.primary-link{
+    color: #ABAFE5;
+}.primary-link:hover {
+     color: #fff;
+     text-decoration: none;
+     font-size: 16px;
+     font-weight: 600;
+ }
+
+ /*
+
+ */
+
+.navbar-dark{
+    background: rgba(5,4,17,0.63)!important;
+    color: #fff;
+}
+.navbar-dark .navbar-nav .nav-link{
+    display: block;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: #ABAFE5;
+    font-size: 16px;
+    line-height: 19px;
+    margin: 0 25px;
+}
+.game-thumbnail{
+    color: #fff;
+}
+
+.game-name{
+    font-family: 'Roboto';
+    display: inline-block;
+    color: #fff;
+    font-size: 24px;
+    line-height: 24px;
+    letter-spacing: 0.34px;
+    font-weight: 700;
+    padding-right: 45px;
+    background: url(/img/arrow_event.svg) no-repeat center right;
+    background-size: 30px auto;
+    padding-top: 4px;
+}
+.game-thumbnail{
+    margin-bottom: 25px;
+    display: block;
+}
+.game-thumbnail:hover .game-name{
+    padding-right: 55px;
+}
+.game-thumbnail:hover .game-img-container img{
+    box-shadow: 0 15px 60px rgba(66,130,233,.45);
+}
+.game-img-container{
+    width: 264px;
+    height: 353px;
+    display: block;
+    margin-bottom: 16px;
+}.game-img-container img, .game-name{
+     transition: 300ms;
+     -webkit-transition: 300ms;
+     -moz-transition: 300ms;
+     -ms-transition: 300ms;
+     -o-transition: 300ms;
+     -khtml-transition: 300ms;
+     max-width: 100%;
+     height: auto;
+     border-radius: 15px;
+ }

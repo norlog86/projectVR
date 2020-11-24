@@ -3,8 +3,7 @@
 @section('title', 'Главная')
 
 @section('content')
-    <div class="container">
-        <h3>Какой то слайдер </h3>
+    <h3>Выберите игру</h3>
 
     <div class="container">
         <div class="starter-template">
@@ -23,7 +22,6 @@
                 @endforeach
             </div>
         </div>
-
     </div>
 @endsection
 

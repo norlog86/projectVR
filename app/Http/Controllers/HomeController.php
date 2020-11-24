@@ -39,6 +39,7 @@ class HomeController extends Controller
     public function show($id, $reservation = null)
     {
         $reservation = Reservation::where('id', $id)->first();
+
         return view('show', ['reservation' => $reservation]);
     }
 
