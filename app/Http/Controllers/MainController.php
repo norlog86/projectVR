@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Room;
+use App\GameRoom;
 use App\Models\Game;
-use App\Models\Time;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
+use App\Models\Room;
+use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
     public function index()
     {
-        $games = Game::get();
+        $games = DB::table('games')
+            ->join('game_rooms', 'games.id', '=', 'game_rooms.game_id')
+            ->get();
         $rooms = Room::get();
         return view('index', compact('games', 'rooms'));
     }
@@ -26,13 +27,19 @@ class MainController extends Controller
     public function room($path)
     {
         $room = Room::where('path', $path)->first();
-        $games = Game::where('room_id', $room->id)->get();
-        return view('room', compact('room', 'games'));
+        $game = GameRoom::where('room_id', $room->id)->get();
+        $games = DB::table('games')
+            ->join('game_rooms', 'games.id', '=', 'game_rooms.game_id')
+            ->where('game_rooms.room_id', $room->id)
+            ->get();
+        return view('room', compact('room', 'game', 'games'));
     }
 
     public function games()
     {
-        $games = Game::get();
+        $games = DB::table('games')
+            ->join('game_rooms', 'games.id', '=', 'game_rooms.game_id')
+            ->get();
         return view('games', compact('games'));
     }
 

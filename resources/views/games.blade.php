@@ -5,6 +5,7 @@
         <div class="starter-template">
             <div class="panel">
                 @foreach($games as $game)
+{{--                    @dd($games)--}}
                     @include('card.card_game', compact('game'))
                 @endforeach
             </div>

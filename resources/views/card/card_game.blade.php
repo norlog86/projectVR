@@ -7,7 +7,7 @@
             <h3>{{$game->name}}</h3>
             <p>{{$game->price}} руб.</p>
             <p>
-                <a href="{{route('game', $game->id)}}"
+                <a href="{{route('game', $game->game_id)}}"
                    class="btn btn-default"
                    role="button">Подробнее</a>
             </p>
