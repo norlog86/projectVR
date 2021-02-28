@@ -10,7 +10,7 @@
             <h1>Игры</h1>
             <div class="filters row">
                 @foreach($games as $game)
-                    @include('card.card_game', compact('game'))
+                    @include('card.card_game_room', ['game'=>$game])
                 @endforeach
             </div>
         </div>

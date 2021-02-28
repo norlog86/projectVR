@@ -11,7 +11,7 @@
             </p>
             <div class="filters row">
                 @foreach($games as $game)
-                    @include('card.card_game', ['room'=>$room])
+                    @include('card.card_game', ['id'=>$game->game_id, 'game'=>$game])
                 @endforeach
             </div>
         </div>

@@ -21,11 +21,7 @@
                     @foreach($reservation->games as $game)
                         <tr>
                             <td>
-                                <a href="{{ route('game', $game->id) }}">
-                                    <img src="{{Storage::url($game->img)}}" alt="{{$game->name}}" width="55"
-                                         height="75">
-                                    {{ $game->name }}
-                                </a>
+                                <p style="color: #2e6da4">{{$game->name}}</p>
                                 <br>
                                 <input type="text" id="game-id" name="game_id" value="{{$game->id}}" hidden>
                                 <input type="text" name="room_id" value="{{$game->room_id}}" hidden>
@@ -93,7 +89,7 @@
                         <br>
                         <div class="form-group">
                             <label for="name" class="control-label col-lg-offset-3 col-lg-2">Кол-во
-                                игроков: </label>
+                                игроков для игры {{$game->players}}: </label>
                             <div class="col-lg-4">
                                 @foreach($reservation->games as $game)
                                     <input type="text" name="players" title="{{$game->players}}"

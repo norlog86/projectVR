@@ -32,7 +32,7 @@ class Game extends Model
 //        return $this->hasOne('App\Models\Time', 'id', 'time');
 //    }
 
-    public function type()
+    public function type_game()
     {
         return $this->belongsTo('App\Models\Type_game');
     }

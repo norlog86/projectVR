@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
+use App\Models\Game_reservations;
 use App\Models\Reservation;
+use App\Models\Reservation_game;
+use App\Models\Room;
 use App\Models\Time;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,17 +18,11 @@ class ReservationController extends Controller
     public function reservation(Request $request)
     {
         $reservationId = session('reservationId');
+
         $reservation = Reservation::find($reservationId);
-        $sost = $reservation->where([
-            ['sost_id', 1],
-            ['room_id', $request->room_id],
-            ['date', $request->date],
-            ['time', $request->time],
-        ])->get();
-        $sost_res = count($sost) == null;
-        if ($sost_res !== null) {
-            $times = Time::get();
-        }
+
+        $times = Time::get();
+
         if (!is_null($reservationId)) {
             $reservation = Reservation::findOrFail($reservationId);
         }
@@ -34,20 +31,24 @@ class ReservationController extends Controller
     }
 
     //Получение свободного времени
-
-    public function  reservationTime(Request $request){
+    public function reservationTime(Request $request)
+    {
 
         //Проще взять игру и найти все записи связанные с ней по дате
         $game = Game::where("id", $request->game_id)->first();
+
         $rooms = $game->rooms()->get();
+
         //Ищем по дате все записи связанные с игрой
         $reservations = $game->reservations()->where("date", $request->date)->get();
+
         $reserv_date = $request->date;
+
         //Осталось вот теперь по комнате скоректировать и огонь, нужно сделать так чтобы
         $times = Time::all();
 
-        return view('partials.time-list', ['reservations'=>$reservations,
-            'times'=>$times, 'rooms'=>$rooms, 'reserv_date'=>$reserv_date])->render();
+        return view('partials.time-list', ['reservations' => $reservations,
+            'times' => $times, 'rooms' => $rooms, 'reserv_date' => $reserv_date])->render();
     }
 
     public function reservationConfirm(Request $request)
@@ -59,16 +60,9 @@ class ReservationController extends Controller
         $reservation = Reservation::find($reservationId);
 
 
-        $date = $request->date;
-        $time = $request->time;
-        $room = $request->room_id;
-//      $sost = Reservation::where('sost_id' == 1)->get();
         $messages = array(
             'unique' => 'Комната уже забронирована на выбранную дату и время',
         );
-//        dd($request->date, $request->time, $request->game_id, $request->room_id);
-
-
         $valid_date = Validator::make($request->all(), array(
             'date' => 'unique:reservations,date',
         ), $messages);
@@ -85,13 +79,18 @@ class ReservationController extends Controller
             ['date', $request->date],
             ['time', $request->time],
         ])->get();
+        $game = Game::where("id", $request->game_id)->first();
+        $rooms = Room::where("id", $game->room_id)->first();
+
+        $model = new Reservation_game();
+        $model->game_id = $request->game_id;
+        $model->reservation_id = $reservationId;
+        $model->quantity = $rooms->quantity - $request->players;
+        $model->time = $request->time;
+        $model->date = $request->date;
+        $model->save();
 
         $sost_res = count($sost) == null;
-
-        //dd($sost);
-        //dd($sost_res == null);
-        //dd($valid_date->fails() and $valid_time->fails() and $valid_room->fails() );
-        //dd(($valid_date->fails() and $valid_time->fails() and $valid_room->fails()) and $sost_res == null);
 
         if ($valid_date->fails() and $valid_time->fails() and $valid_room->fails() and $sost_res == null) {
             return redirect()->back()->withErrors($valid_date->errors());
@@ -121,7 +120,6 @@ class ReservationController extends Controller
     public function reservationAdd($gameId)
     {
         $reservationId = session('reservationId');
-//        dd($reservationId);
         if (is_null($reservationId)) {
             $reservation = Reservation::create();
             session(['reservationId' => $reservation->id]);
@@ -153,15 +151,19 @@ class ReservationController extends Controller
     public function reservationRemove($gameId)
     {
         $reservationId = session('reservationId');
+
         if (is_null($reservationId)) {
             return redirect()->route('reservation');
         }
+
         $reservation = Reservation::find($reservationId);
+
         $reservation->games()->detach($gameId);
+
         $reservation->delete();
 
-
         $game = Game::find($gameId);
+
         session()->forget('reservationId');
 
         session()->flash('warning', 'Отменена бронирования игры  ' . $game->name);
@@ -172,7 +174,9 @@ class ReservationController extends Controller
     public function reservationDrop(Reservation $reservation)
     {
         $reservation->sost_id = 2;
+
         $reservation->save();
+
         return redirect()->route('home')->with('warning', 'Бронь отменена');
     }
 }

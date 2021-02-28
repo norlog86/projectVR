@@ -22,7 +22,7 @@ Route::get('/', [MainController::class, 'index'])->name('index');
 
 Route::group(['prefix' => 'reservation'], function () {
 
-    Route::post('/add/{id}', [ReservationController::class, 'reservationAdd'])->name('reservation_add');
+    Route::post('/add/{id}{room}', [ReservationController::class, 'reservationAdd'])->name('reservation_add');
 
     Route::group([
         'middleware' => [
@@ -46,10 +46,12 @@ Route::patch('/show/{reservation}', [ReservationController::class, 'reservationD
 Route::get('/rooms', [MainController::class, 'rooms'])->name('rooms');
 Route::get('/rooms/{room?}', [MainController::class, 'room'])->name('room');
 
-Route::group(['prefix'=>'games'], function (){
+Route::group(['prefix' => 'games'], function () {
     Route::get('/', [MainController::class, 'games'])->name('games');
-    Route::get('/{id?}', [MainController::class, 'game'])->name('game');
+    Route::get('/{id}{room}', [MainController::class, 'game'])->name('game');
 });
+
+Route::get('/games_room/{id?}', [MainController::class, 'games_room'])->name('games_room');
 
 
 Route::get('/about', [MainController::class, 'about'])->name('about');

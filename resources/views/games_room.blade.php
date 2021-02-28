@@ -5,7 +5,7 @@
         <div class="starter-template">
             <div class="panel">
                 @foreach($games as $game)
-                    @include('card.card_game', ['id'=>$game->game_id, 'game'=>$game])
+                    @include('card.card_game', ['game'=>$game])
                 @endforeach
             </div>
         </div>
