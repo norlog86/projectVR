@@ -75,20 +75,25 @@ class ReservationController extends Controller
 
         $sost = $reservation->where([
             ['sost_id', 1],
-            ['room_id', $request->room_id],
+            ['room_id', $request->rooms_id],
             ['date', $request->date],
             ['time', $request->time],
         ])->get();
         $game = Game::where("id", $request->game_id)->first();
-        $rooms = Room::where("id", $game->room_id)->first();
+        $rooms = $game->rooms()->first();
 
-        $model = new Reservation_game();
-        $model->game_id = $request->game_id;
-        $model->reservation_id = $reservationId;
-        $model->quantity = $rooms->quantity - $request->players;
-        $model->time = $request->time;
-        $model->date = $request->date;
-        $model->save();
+        $model = Reservation_game::where("game_id", $request->game_id && "reservation_id", $reservationId);
+        dd($model);
+        if ($model == 1000000) {
+            $model = new Reservation_game();
+            $model->game_id = $request->game_id;
+            $model->reservation_id = $reservationId;
+            $model->quantity = $rooms->quantity - $request->players;
+            $model->time = $request->time;
+            $model->date = $request->date;
+            $model->save();
+        }
+
 
         $sost_res = count($sost) == null;
 
@@ -117,7 +122,7 @@ class ReservationController extends Controller
         return view('reservation', compact('reservation'));
     }
 
-    public function reservationAdd($gameId)
+    public function reservationAdd($gameId, $roomId)
     {
         $reservationId = session('reservationId');
         if (is_null($reservationId)) {
@@ -127,13 +132,14 @@ class ReservationController extends Controller
             $reservation = Reservation::find($reservationId);
         }
 //        Уберает дублированные игры
-        if ($reservation->games->contains($gameId)) {
+        if ($reservation->games->contains($gameId) && $reservation->rooms->contains($roomId)) {
             session()->flash('warning', 'Такая игра уже есть');
             //Не больше одной игры(Временная)
         } elseif ($reservation->games->count($gameId) >= 1) {
             session()->flash('warning', 'Больше одной игры');
         } else {
             $reservation->games()->attach($gameId);
+            $reservation->rooms()->attach($roomId);
         }
 
         if (Auth::check()) {

@@ -18,6 +18,7 @@
                     </tr>
                     </thead>
                     <tbody>
+{{--                    @dd($reservation->rooms)--}}
                     @foreach($reservation->games as $game)
                         <tr>
                             <td>
